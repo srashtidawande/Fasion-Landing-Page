@@ -12,8 +12,9 @@ export function ProductCard({ product, onOpenModal }) {
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ y: -10 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
             className="group relative"
@@ -23,7 +24,7 @@ export function ProductCard({ product, onOpenModal }) {
                 <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.22, 1, 0.36, 1)] group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.22, 1, 0.36, 1)] group-hover:scale-105"
                 />
 
                 {/* Status Badges */}
@@ -50,29 +51,26 @@ export function ProductCard({ product, onOpenModal }) {
                 </button>
 
                 {/* Editorial Overlay */}
-                <div className="absolute inset-x-0 bottom-0 p-8 glass-dark opacity-0 group-hover:opacity-100 translate-y-full group-hover:translate-y-0 transition-all duration-700 ease-[cubic-bezier(0.22, 1, 0.36, 1)] hidden md:flex flex-col gap-4">
-                    <div className="flex justify-between items-end">
-                        <div className="space-y-1">
-                            <span className="text-[8px] uppercase tracking-[0.4em] text-white/50 block">Details</span>
-                            <span className="text-[10px] uppercase tracking-widest text-white font-bold block">{product.category}</span>
-                        </div>
+                <div className="absolute inset-0 p-8 glass-dark opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22, 1, 0.36, 1)] hidden md:flex flex-col justify-end gap-6 overflow-hidden">
+                    <div className="space-y-2 translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-100">
+                        <span className="text-[10px] uppercase tracking-[0.5em] text-accent font-black block">Discover</span>
+                        <h4 className="text-2xl font-serif italic text-white leading-tight">{product.name}</h4>
+                    </div>
+                    
+                    <div className="flex gap-3 translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-200">
                         <button
                             onClick={(e) => { e.stopPropagation(); onOpenModal(product); }}
-                            className="bg-white p-3 rounded-full hover:bg-accent hover:text-white transition-all transform hover:rotate-90"
+                            className="flex-1 py-4 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 shadow-2xl"
                         >
-                            <Eye size={16} />
+                            View Details
+                        </button>
+                        <button
+                            onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+                            className="aspect-square w-14 flex items-center justify-center bg-accent text-white hover:bg-white hover:text-black transition-all duration-500 shadow-2xl"
+                        >
+                            <ShoppingBag size={18} />
                         </button>
                     </div>
-
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            addToCart(product);
-                        }}
-                        className="w-full py-4 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] hover:bg-accent hover:text-white transition-all duration-500 shadow-2xl"
-                    >
-                        Quick Add to Bag
-                    </button>
                 </div>
 
                 {/* Mobile Cart Button */}

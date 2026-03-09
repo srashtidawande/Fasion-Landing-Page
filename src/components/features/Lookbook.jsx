@@ -60,9 +60,9 @@ export function Lookbook() {
                                 <p className="text-muted leading-relaxed font-light text-lg">
                                     {item.description}
                                 </p>
-                                <button className="group relative py-4 px-10 overflow-hidden bg-primary text-white text-xs uppercase tracking-[0.2em] font-bold">
+                                <button className="group relative py-5 px-12 overflow-hidden bg-primary text-white text-[10px] uppercase tracking-[0.3em] font-black shadow-2xl transition-all hover:tracking-[0.4em]">
                                     <span className="relative z-10">Discover Collection</span>
-                                    <div className="absolute inset-0 bg-accent translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
+                                    <div className="absolute inset-0 bg-accent translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.22, 1, 0.36, 1)] group-hover:translate-y-0"></div>
                                 </button>
                             </motion.div>
                         </div>

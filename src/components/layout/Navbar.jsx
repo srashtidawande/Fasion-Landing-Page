@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ShoppingBag, Search, Menu, X, Heart, Sun, Moon, ChevronRight, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, Heart, Sun, Moon, ChevronRight, ArrowRight, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
@@ -50,6 +50,8 @@ export function Navbar({ onOpenWishlist }) {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const timeoutRef = useRef(null);
     const navigate = useNavigate();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const { cartCount, setIsCartOpen } = useCart();
     const { theme, toggleTheme } = useTheme();
@@ -75,7 +77,7 @@ export function Navbar({ onOpenWishlist }) {
 
     return (
         <nav
-            className={`sticky top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'glass dark:glass-dark py-4 shadow-2xl border-b border-black/5 dark:border-white/5' : 'bg-white dark:bg-[#0a0a0a] py-8'}`}
+            className={`sticky top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'glass dark:glass-dark py-2 shadow-2xl border-b border-black/5 dark:border-white/5' : 'bg-white dark:bg-[#0a0a0a] py-4'}`}
             onMouseLeave={handleMouseLeave}
         >
             <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -131,8 +133,16 @@ export function Navbar({ onOpenWishlist }) {
                     <button
                         className="hover:text-accent dark:text-white transition-all transform hover:scale-110"
                         aria-label="Search products"
+                        onClick={() => setIsSearchOpen(true)}
                     >
                         <Search size={22} strokeWidth={1.2} />
+                    </button>
+                    <button
+                        className="hover:text-accent dark:text-white transition-all transform hover:scale-110"
+                        aria-label="User account"
+                        onClick={() => alert('Login functionality coming soon!')}
+                    >
+                        <User size={22} strokeWidth={1.2} />
                     </button>
                     <button
                         className="hover:text-accent dark:text-white transition-all transform hover:scale-110 relative"
@@ -256,6 +266,70 @@ export function Navbar({ onOpenWishlist }) {
                 )}
             </AnimatePresence>
 
+            {/* Search Overlay */}
+            <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] bg-white dark:bg-black"
+                    >
+                        <div className="container mx-auto px-6 h-full flex flex-col">
+                            <div className="flex justify-end py-8">
+                                <button
+                                    onClick={() => setIsSearchOpen(false)}
+                                    className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                >
+                                    <X size={32} className="dark:text-white" />
+                                </button>
+                            </div>
+                            <div className="flex-1 flex flex-col items-center justify-center -mt-20">
+                                <motion.div
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="w-full max-w-4xl"
+                                >
+                                    <div className="relative group">
+                                        <input
+                                            autoFocus
+                                            type="text"
+                                            placeholder="What are you looking for?"
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);
+                                                    setIsSearchOpen(false);
+                                                }
+                                            }}
+                                            className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 py-8 text-4xl md:text-6xl font-serif italic focus:outline-none focus:border-accent transition-all dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-800"
+                                        />
+                                        <Search size={40} className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300 dark:text-gray-800 group-focus-within:text-accent transition-colors" />
+                                    </div>
+                                    <div className="mt-12 flex flex-wrap gap-4 justify-center">
+                                        <span className="text-xs uppercase tracking-[0.3em] text-gray-400 w-full text-center mb-4">Suggested Searches</span>
+                                        {['Dresses', 'Tops', 'Outerwear', 'Accessories'].map((tag) => (
+                                            <button
+                                                key={tag}
+                                                onClick={() => {
+                                                    navigate(`/shop?category=${tag}`);
+                                                    setIsSearchOpen(false);
+                                                }}
+                                                className="px-6 py-2 border border-black/10 dark:border-white/10 rounded-full text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all dark:text-white"
+                                            >
+                                                {tag}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Mobile Menu */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
@@ -297,6 +371,12 @@ export function Navbar({ onOpenWishlist }) {
                                     className="flex items-center gap-4 text-sm uppercase tracking-widest font-bold dark:text-white"
                                 >
                                     <ShoppingBag size={20} /> Cart ({cartCount})
+                                </button>
+                                <button
+                                    onClick={() => { alert('Login functionality coming soon!'); setIsMobileMenuOpen(false); }}
+                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-bold dark:text-white"
+                                >
+                                    <User size={20} /> Login / Register
                                 </button>
                             </div>
                         </div>

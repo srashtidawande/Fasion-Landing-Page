@@ -34,8 +34,8 @@ export function BrandStory() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                     >
-                        <span className="uppercase tracking-[0.3em] text-xs font-semibold text-accent mb-4 block">Our Legacy</span>
-                        <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight dark:text-white">Crafting Timeless <br /><span className="italic">Sophistication</span></h2>
+                        <span className="uppercase tracking-[0.4em] text-[10px] font-black text-accent mb-6 block">Our Legacy</span>
+                        <h2 className="text-4xl md:text-6xl font-serif mb-10 leading-[1.1] dark:text-white tracking-tight">Crafting Timeless <br /><span className="italic font-light">Sophistication</span></h2>
                         <div className="space-y-6 text-gray-600 dark:text-gray-400 leading-relaxed font-light">
                             <p>
                                 Founded on the principles of minimalism and meticulous craftsmanship, LUXE has been redefining the boundaries of modern fashion since its inception. We believe that true luxury lies in simplicity and the quality of every single stitch.

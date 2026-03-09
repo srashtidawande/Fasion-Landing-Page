@@ -5,12 +5,12 @@ import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
-import { AnnouncementBar } from './components/layout/AnnouncementBar';
 import { CartSidebar } from './components/features/CartSidebar';
 import { WishlistSidebar } from './components/features/WishlistSidebar';
 import { ProductModal } from './components/features/ProductModal';
 import { NewsletterModal } from './components/features/NewsletterModal';
 import { BackToTop } from './components/features/BackToTop';
+import { CustomCursor } from './components/ui/CustomCursor';
 import { Home } from './pages/Home';
 import { Shop } from './pages/Shop';
 import { About } from './pages/About';
@@ -43,7 +43,7 @@ function App() {
       <CartProvider>
         <WishlistProvider>
           <div className="font-sans text-primary dark:text-[#f5f5f5] transition-colors duration-300">
-            <AnnouncementBar />
+            <CustomCursor />
             <Navbar onOpenWishlist={() => setIsWishlistOpen(true)} />
 
             <main className="min-h-screen">

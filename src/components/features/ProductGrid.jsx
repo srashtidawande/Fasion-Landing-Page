@@ -33,6 +33,7 @@ export function ProductGrid({ onOpenModal }) {
     const [activeDepartment, setActiveDepartment] = useState("All");
     const [activeCategory, setActiveCategory] = useState("All");
     const [sortBy, setSortBy] = useState("default");
+    const [searchTerm, setSearchTerm] = useState("");
 
     // Dynamic categories based on selection
     const availableCategories = useMemo(() => {
@@ -49,6 +50,7 @@ export function ProductGrid({ onOpenModal }) {
         const params = new URLSearchParams(location.search);
         const deptParam = params.get('department');
         const catParam = params.get('category');
+        const searchParam = params.get('search');
 
         if (deptParam && departmentNames.includes(deptParam)) {
             setActiveDepartment(deptParam);
@@ -61,6 +63,12 @@ export function ProductGrid({ onOpenModal }) {
             setActiveCategory(catParam);
         } else {
             setActiveCategory("All");
+        }
+
+        if (searchParam) {
+            setSearchTerm(searchParam);
+        } else {
+            setSearchTerm("");
         }
     }, [location.search]);
 
@@ -75,6 +83,15 @@ export function ProductGrid({ onOpenModal }) {
             result = result.filter(p => p.category === activeCategory);
         }
 
+        if (searchTerm) {
+            const query = searchTerm.toLowerCase();
+            result = result.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query) ||
+                p.department.toLowerCase().includes(query)
+            );
+        }
+
         if (sortBy === "price-asc") {
             result = [...result].sort((a, b) => a.price - b.price);
         } else if (sortBy === "price-desc") {
@@ -82,7 +99,7 @@ export function ProductGrid({ onOpenModal }) {
         }
 
         return result;
-    }, [activeDepartment, activeCategory, sortBy]);
+    }, [activeDepartment, activeCategory, sortBy, searchTerm]);
 
     return (
         <section id="collections" className="py-20 px-6 md:px-12 bg-white dark:bg-[#0f0f0f] transition-colors duration-300">
@@ -175,9 +192,15 @@ export function ProductGrid({ onOpenModal }) {
                         <Button
                             variant="outline"
                             className="mt-4"
-                            onClick={() => setActiveCategory("All")}
+                            onClick={() => {
+                                setActiveCategory("All");
+                                setActiveDepartment("All");
+                                setSearchTerm("");
+                                // Clear URL params
+                                window.history.pushState({}, '', window.location.pathname);
+                            }}
                         >
-                            Clear Filters
+                            Clear All Filters
                         </Button>
                     </div>
                 )}

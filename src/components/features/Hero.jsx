@@ -28,6 +28,18 @@ const slides = [
 
 export function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePos({
+                x: (e.clientX / window.innerWidth - 0.5) * 20,
+                y: (e.clientY / window.innerHeight - 0.5) * 20
+            });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -35,6 +47,13 @@ export function Hero() {
         }, 8000);
         return () => clearInterval(timer);
     }, []);
+
+    const scrollToCollections = () => {
+        const element = document.getElementById('collections');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
@@ -48,16 +67,19 @@ export function Hero() {
                     className="absolute inset-0 z-0"
                 >
                     <motion.div
-                        initial={{ scale: 1.1 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 8, ease: "easeOut" }}
-                        className="absolute inset-0"
+                        animate={{ 
+                            x: mousePos.x,
+                            y: mousePos.y,
+                            scale: 1.05
+                        }}
+                        transition={{ type: "tween", ease: "linear", duration: 0 }}
+                        className="absolute inset-x-[-5%] inset-y-[-5%] w-[110%] h-[110%]"
                     >
-                        <div className="absolute inset-0 bg-black/40 z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 z-10" />
                         <img
                             src={slides[currentSlide].image}
                             alt={slides[currentSlide].title}
-                            className="w-full h-full object-cover shadow-2xl"
+                            className="w-full h-full object-cover transition-opacity duration-1000"
                         />
                     </motion.div>
                 </motion.div>
@@ -79,18 +101,18 @@ export function Hero() {
                             {slides[currentSlide].subtitle}
                         </motion.div>
 
-                        <h1 className="flex flex-wrap justify-center mb-10 overflow-hidden">
+                        <h1 className="flex flex-wrap justify-center mb-10 overflow-hidden py-4">
                             {slides[currentSlide].title.split("").map((char, index) => (
                                 <motion.span
                                     key={index}
-                                    initial={{ y: 200, skewY: 10, opacity: 0 }}
-                                    animate={{ y: 0, skewY: 0, opacity: 1 }}
+                                    initial={{ y: "100%", rotateX: 90, opacity: 0 }}
+                                    animate={{ y: 0, rotateX: 0, opacity: 1 }}
                                     transition={{
-                                        duration: 0.8,
-                                        delay: 0.1 * index + 0.5,
+                                        duration: 1.2,
+                                        delay: 0.05 * index + 0.5,
                                         ease: [0.22, 1, 0.36, 1]
                                     }}
-                                    className={`text-6xl md:text-[10rem] font-serif font-light text-white tracking-tighter leading-[0.9] ${char === " " ? "mr-8" : ""}`}
+                                    className={`text-6xl md:text-[11rem] font-serif font-light text-white tracking-tighter leading-[0.85] ${char === " " ? "mr-10" : ""}`}
                                 >
                                     {char}
                                 </motion.span>
@@ -107,7 +129,11 @@ export function Hero() {
                                 {slides[currentSlide].description}
                             </p>
                             <div className="flex gap-4">
-                                <Button variant="primary" className="glass text-white border-white/30 px-12 py-5 hover:bg-white hover:text-black transition-all font-bold tracking-[0.3em] text-[10px] group">
+                                <Button 
+                                    variant="primary" 
+                                    onClick={scrollToCollections}
+                                    className="glass text-white border-white/30 px-12 py-5 hover:bg-white hover:text-black transition-all font-bold tracking-[0.3em] text-[10px] group"
+                                >
                                     Explore Collection
                                 </Button>
                             </div>

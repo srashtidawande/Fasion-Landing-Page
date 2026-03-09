@@ -22,13 +22,13 @@ export function AnnouncementBar() {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + offers.length) % offers.length);
 
     return (
-        <div className="bg-black text-white py-6 px-4 relative h-20 md:h-[100px] flex items-center justify-center overflow-hidden border-b border-white/10 group">
+        <div className="bg-[#f0f0f0] dark:bg-[#151515] text-primary dark:text-white py-8 px-4 relative h-20 md:h-[120px] flex items-center justify-center overflow-hidden border-b border-black/5 dark:border-white/5 group transition-colors duration-500">
             <button
                 onClick={handlePrev}
-                className="absolute left-6 z-10 opacity-50 hover:opacity-100 transition-opacity"
+                className="absolute left-10 z-10 opacity-30 hover:opacity-100 transition-opacity"
                 aria-label="Previous offer"
             >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} />
             </button>
 
             <div className="w-full max-w-4xl text-center relative h-full flex items-center justify-center">
@@ -41,10 +41,10 @@ export function AnnouncementBar() {
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className="flex flex-col items-center justify-center gap-3 md:gap-6"
                     >
-                        <span className="text-[12px] md:text-[14px] font-black uppercase tracking-[0.5em] bg-white text-black px-4 py-1.5 rounded-sm shrink-0">
+                        <span className="text-[12px] md:text-[14px] font-black uppercase tracking-[0.5em] bg-primary dark:bg-white text-white dark:text-black px-5 py-2 rounded-full shrink-0 shadow-lg">
                             {offers[currentIndex].highlight}
                         </span>
-                        <p className="text-[14px] md:text-[18px] lg:text-[20px] font-light tracking-[0.2em] uppercase max-w-[300px] md:max-w-none leading-relaxed">
+                        <p className="text-[16px] md:text-[22px] lg:text-[26px] font-light tracking-[0.3em] uppercase max-w-[320px] md:max-w-none leading-tight opacity-90">
                             {offers[currentIndex].text}
                         </p>
                     </motion.div>
@@ -53,10 +53,10 @@ export function AnnouncementBar() {
 
             <button
                 onClick={handleNext}
-                className="absolute right-6 z-10 opacity-50 hover:opacity-100 transition-opacity"
+                className="absolute right-10 z-10 opacity-30 hover:opacity-100 transition-opacity"
                 aria-label="Next offer"
             >
-                <ChevronRight size={24} />
+                <ChevronRight size={20} />
             </button>
 
             {/* Pagination Dots (Mobile) */}
