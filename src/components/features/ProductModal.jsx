@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, Truck, ShieldCheck } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/hooks';
 
 export function ProductModal({ product, isOpen, onClose }) {
     const { addToCart } = useCart();

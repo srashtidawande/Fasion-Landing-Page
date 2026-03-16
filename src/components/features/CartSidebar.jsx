@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/hooks';
 import { Button } from '../ui/Button';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';

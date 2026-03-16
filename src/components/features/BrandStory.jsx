@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export function BrandStory() {
     return (
-        <section id="our-story" className="py-24 bg-secondary dark:bg-[#1a1a1a] transition-colors duration-300 overflow-hidden">
+        <section id="brand-story" className="section-padding bg-secondary dark:bg-[#1a1a1a] transition-colors duration-300 overflow-hidden">
             <div className="container mx-auto px-6 md:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <motion.div
@@ -16,6 +16,7 @@ export function BrandStory() {
                             <img
                                 src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=1000"
                                 alt="Brand Story"
+                                loading="lazy"
                                 className="w-full h-full object-cover"
                             />
                         </div>
@@ -23,6 +24,7 @@ export function BrandStory() {
                             <img
                                 src="https://images.unsplash.com/photo-1445205170230-053b830c6050?auto=format&fit=crop&q=80&w=500"
                                 alt="Brand Detail"
+                                loading="lazy"
                                 className="w-full h-full object-cover shadow-2xl"
                             />
                         </div>

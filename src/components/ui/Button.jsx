@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { clsx } from 'clsx';
+
 import { twMerge } from 'tailwind-merge';
 
 export function Button({ children, className, variant = 'primary', ...props }) {
@@ -12,10 +12,13 @@ export function Button({ children, className, variant = 'primary', ...props }) {
 
     return (
         <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+            }}
             whileTap={{ scale: 0.98 }}
             className={twMerge(
-                'px-8 py-3 transition-colors duration-300 uppercase tracking-widest text-xs font-semibold disabled:opacity-50',
+                'px-8 py-3 transition-all duration-500 uppercase tracking-widest text-xs font-semibold disabled:opacity-50',
                 variants[variant],
                 className
             )}

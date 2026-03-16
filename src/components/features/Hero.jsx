@@ -1,34 +1,42 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Button } from '../ui/Button';
 
 const slides = [
     {
         id: 1,
-        title: "Elegance Redefined",
-        subtitle: "Haute Couture • Spring 2026",
-        description: "Experience the intersection of architectural precision and organic luxury.",
+        title: "Discover Your Style",
+        subtitle: "Luxury Redefined • Spring 2026",
+        description: "Experience the curated collection of modern fashion, where minimalist design meets exceptional craftsmanship.",
         image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1920"
     },
     {
         id: 2,
         title: "Timeless Craft",
         subtitle: "Exclusive Atelier",
-        description: "Meticulously crafted pieces designed to last across generations.",
+        description: "Meticulously crafted pieces designed to gracefully transcend trends and generations.",
         image: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=1920"
     },
     {
         id: 3,
         title: "Organic Luxury",
         subtitle: "Season Collective",
-        description: "Celebrating the beauty of natural fibers and sustainable silhouettes.",
-        image: "https://images.unsplash.com/photo-1539109132332-629ee63989c4?auto=format&fit=crop&q=80&w=1920"
+        description: "Celebrating the innate beauty of natural fibers and sophisticated, sustainable silhouettes.",
+        image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&q=80&w=1920"
     }
 ];
 
 export function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const containerRef = useRef(null);
+    
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end start"]
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -56,7 +64,7 @@ export function Hero() {
     };
 
     return (
-        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <section ref={containerRef} className="relative h-screen w-full flex items-center justify-center overflow-hidden">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentSlide}
@@ -65,6 +73,7 @@ export function Hero() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1.5, ease: "easeInOut" }}
                     className="absolute inset-0 z-0"
+                    style={{ y }}
                 >
                     <motion.div
                         animate={{ 
@@ -73,13 +82,22 @@ export function Hero() {
                             scale: 1.05
                         }}
                         transition={{ type: "tween", ease: "linear", duration: 0 }}
-                        className="absolute inset-x-[-5%] inset-y-[-5%] w-[110%] h-[110%]"
+                        className="absolute inset-x-[-10%] inset-y-[-10%] w-[120%] h-[120%]"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 z-10" />
-                        <img
+                    <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-overlay)] via-transparent to-[var(--hero-overlay)] z-10" />
+                        <motion.img
+                            key={slides[currentSlide].image}
                             src={slides[currentSlide].image}
                             alt={slides[currentSlide].title}
-                            className="w-full h-full object-cover transition-opacity duration-1000"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: 1.1 }}
+                            transition={{ 
+                                duration: 8, 
+                                ease: "linear",
+                                repeat: Infinity,
+                                repeatType: "reverse"
+                            }}
+                            className="w-full h-full object-cover"
                         />
                     </motion.div>
                 </motion.div>
@@ -96,7 +114,7 @@ export function Hero() {
                             initial={{ opacity: 0, letterSpacing: "0.2em" }}
                             animate={{ opacity: 1, letterSpacing: "0.5em" }}
                             transition={{ duration: 1, delay: 0.5 }}
-                            className="text-white uppercase text-[10px] md:text-xs font-black mb-8 block drop-shadow-lg"
+                            className="text-[var(--text-primary)] uppercase text-[10px] md:text-xs font-black mb-8 block drop-shadow-lg"
                         >
                             {slides[currentSlide].subtitle}
                         </motion.div>
@@ -112,7 +130,7 @@ export function Hero() {
                                         delay: 0.05 * index + 0.5,
                                         ease: [0.22, 1, 0.36, 1]
                                     }}
-                                    className={`text-6xl md:text-[11rem] font-serif font-light text-white tracking-tighter leading-[0.85] ${char === " " ? "mr-10" : ""}`}
+                                    className={`text-[clamp(3.5rem,15vw,11rem)] font-serif font-light text-[var(--text-primary)] tracking-tighter leading-[0.85] ${char === " " ? "mr-[clamp(1.5rem,5vw,2.5rem)]" : ""}`}
                                 >
                                     {char}
                                 </motion.span>
@@ -125,16 +143,16 @@ export function Hero() {
                             transition={{ duration: 1, delay: 1.5 }}
                             className="flex flex-col md:flex-row gap-8 justify-center items-center"
                         >
-                            <p className="text-white/70 text-sm md:text-base max-w-sm font-light tracking-widest leading-relaxed italic md:text-left md:border-l border-white/20 md:pl-8">
+                            <p className="text-[var(--text-primary)]/70 text-sm md:text-base max-w-sm font-light tracking-widest leading-relaxed italic md:text-left md:border-l border-[var(--text-primary)]/20 md:pl-8">
                                 {slides[currentSlide].description}
                             </p>
                             <div className="flex gap-4">
                                 <Button 
                                     variant="primary" 
                                     onClick={scrollToCollections}
-                                    className="glass text-white border-white/30 px-12 py-5 hover:bg-white hover:text-black transition-all font-bold tracking-[0.3em] text-[10px] group"
+                                    className="glass text-[var(--text-primary)] border-[var(--border-color)] px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold tracking-[0.3em] text-[10px] group"
                                 >
-                                    Explore Collection
+                                    Shop Now
                                 </Button>
                             </div>
                         </motion.div>

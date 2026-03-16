@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Eye } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { useWishlist } from '../../context/WishlistContext';
-import { useCart } from '../../context/CartContext';
+import { useWishlist, useCart } from '../../context/hooks';
 
 export function ProductCard({ product, onOpenModal }) {
     const { toggleWishlist, isInWishlist } = useWishlist();
@@ -14,90 +13,81 @@ export function ProductCard({ product, onOpenModal }) {
             layout
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            whileHover={{ y: -10 }}
+            whileHover={{ 
+                y: -10,
+                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+            }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="group relative"
+            className="group relative bg-[var(--bg-primary)] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-[var(--border-color)]"
         >
             {/* Image Container */}
-            <div className="relative overflow-hidden aspect-[3/4] bg-[#f8f8f8] dark:bg-[#1a1a1a] transition-colors duration-500">
-                <img
+            <div className="relative overflow-hidden aspect-[4/5] bg-[var(--bg-secondary)]">
+                <motion.img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.22, 1, 0.36, 1)] group-hover:scale-105"
+                    loading="lazy"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full h-full object-cover"
                 />
 
                 {/* Status Badges */}
-                <div className="absolute top-5 left-5 flex flex-col gap-2 z-10">
+                <div className="absolute top-6 left-6 flex flex-col gap-2 z-10">
                     {product.isNew && (
-                        <div className="glass dark:glass-dark px-4 py-1.5 text-[8px] font-black uppercase tracking-[0.3em] dark:text-white shadow-xl">
+                        <div className="glass px-4 py-2 text-[8px] font-black uppercase tracking-[0.3em] text-[var(--text-primary)] rounded-full shadow-lg">
                             New Arrival
                         </div>
                     )}
                 </div>
 
-                {/* Wishlist Icon - Floating Style */}
+                {/* Wishlist Icon */}
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         toggleWishlist(product);
                     }}
-                    className={`absolute top-5 right-5 p-3 rounded-full glass dark:glass-dark z-20 transition-all duration-500 transform ${isWishlisted
-                            ? 'bg-accent text-white scale-110'
-                            : 'text-primary dark:text-white hover:bg-white dark:hover:bg-white/20 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                    className={`absolute top-6 right-6 p-3.5 rounded-full glass z-20 transition-all duration-500 transform ${isWishlisted
+                            ? 'bg-accent text-white scale-110 shadow-glow'
+                            : 'text-[var(--text-primary)] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0'
                         }`}
                 >
-                    <Heart size={14} strokeWidth={isWishlisted ? 0 : 2} fill={isWishlisted ? "currentColor" : "none"} />
+                    <Heart size={16} strokeWidth={isWishlisted ? 0 : 2} fill={isWishlisted ? "currentColor" : "none"} />
                 </button>
 
-                {/* Editorial Overlay */}
-                <div className="absolute inset-0 p-8 glass-dark opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22, 1, 0.36, 1)] hidden md:flex flex-col justify-end gap-6 overflow-hidden">
-                    <div className="space-y-2 translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-100">
-                        <span className="text-[10px] uppercase tracking-[0.5em] text-accent font-black block">Discover</span>
-                        <h4 className="text-2xl font-serif italic text-white leading-tight">{product.name}</h4>
-                    </div>
-                    
-                    <div className="flex gap-3 translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-200">
-                        <button
-                            onClick={(e) => { e.stopPropagation(); onOpenModal(product); }}
-                            className="flex-1 py-4 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 shadow-2xl"
-                        >
-                            View Details
-                        </button>
-                        <button
-                            onClick={(e) => { e.stopPropagation(); addToCart(product); }}
-                            className="aspect-square w-14 flex items-center justify-center bg-accent text-white hover:bg-white hover:text-black transition-all duration-500 shadow-2xl"
-                        >
-                            <ShoppingBag size={18} />
-                        </button>
-                    </div>
+                {/* Hover Overlay - Simplified & Elegant */}
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                
+                <div className="absolute inset-x-6 bottom-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100 hidden md:block">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onOpenModal(product); }}
+                        className="w-full py-4 bg-[var(--bg-primary)] text-[var(--text-primary)] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 rounded-xl shadow-2xl backdrop-blur-md border border-[var(--border-color)]"
+                    >
+                        Quick View
+                    </button>
                 </div>
-
-                {/* Mobile Cart Button */}
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(product);
-                    }}
-                    className="md:hidden absolute bottom-4 right-4 p-3 bg-white dark:bg-black rounded-full shadow-xl"
-                >
-                    <ShoppingBag size={18} />
-                </button>
             </div>
 
             {/* Product Meta */}
-            <div className="mt-6 flex flex-col items-center text-center">
-                <span className="text-[9px] uppercase tracking-[0.3em] text-gray-400 mb-2 font-bold">{product.department}</span>
+            <div className="p-8 pb-10 flex flex-col items-center text-center">
+                <span className="text-[10px] uppercase tracking-[0.4em] text-accent mb-3 font-black">{product.department}</span>
                 <h3
                     onClick={() => onOpenModal(product)}
-                    className="text-sm font-serif italic text-gray-900 dark:text-white mb-2 cursor-pointer hover:text-accent transition-colors"
+                    className="text-lg font-serif italic text-[var(--text-primary)] mb-3 cursor-pointer hover:text-accent transition-colors line-clamp-1 leading-tight"
                 >
                     {product.name}
                 </h3>
-                <div className="flex items-center gap-3">
-                    <span className="text-xs font-black tracking-widest dark:text-white">₹{product.price.toLocaleString()}</span>
-                    {/* Placeholder for old price if needed */}
+                <div className="flex items-center gap-3 mb-8">
+                    <span className="text-sm font-black tracking-[0.2em] text-[var(--text-primary)]">₹{product.price.toLocaleString()}</span>
                 </div>
+                
+                <button
+                    onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+                    className="w-full py-4.5 bg-transparent border-2 border-[var(--text-primary)] text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all duration-500 flex items-center justify-center gap-3 group/btn"
+                >
+                    <ShoppingBag size={14} className="group-hover/btn:scale-110 transition-transform" />
+                    Add to Cart
+                </button>
             </div>
         </motion.div>
     );

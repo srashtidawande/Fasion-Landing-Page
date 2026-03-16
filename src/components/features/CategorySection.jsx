@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom';
 
 const categories = [
     {
-        title: "Women",
-        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800",
-        link: "/shop?department=Women",
-        desc: "Sophisticated elegance for her"
-    },
-    {
         title: "Men",
         image: "https://images.unsplash.com/photo-1594932224031-92f0797a36af?auto=format&fit=crop&q=80&w=800",
         link: "/shop?department=Men",
         desc: "Refined style for him"
     },
     {
-        title: "Kids",
-        image: "https://images.unsplash.com/photo-1519457431-758c4a6ae7d1?auto=format&fit=crop&q=80&w=800",
-        link: "/shop?department=Kids",
-        desc: "Comfort and play in style"
+        title: "Women",
+        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800",
+        link: "/shop?department=Women",
+        desc: "Sophisticated elegance for her"
     },
     {
-        title: "Beauty",
-        image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&q=80&w=800",
-        link: "/shop?department=Beauty",
-        desc: "Elevate your essence"
+        title: "Accessories",
+        image: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=600&auto=format&fit=crop&q=80",
+        link: "/shop?category=Accessories",
+        desc: "The perfect finishing touch"
+    },
+    {
+        title: "New Arrivals",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+        link: "/shop?isNew=true",
+        desc: "Stay ahead of the curve"
     }
 ];
 
 export function CategorySection() {
     return (
-        <section className="py-24 bg-secondary dark:bg-[#0a0a0a] transition-colors duration-500 overflow-hidden">
-            <div className="container mx-auto px-6">
+        <section id="categories" className="section-padding bg-secondary dark:bg-[#0a0a0a] transition-colors duration-500 overflow-hidden">
+            <div className="container mx-auto px-6 md:px-12">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
                     <div className="max-w-2xl">
                         <motion.span
@@ -64,7 +64,7 @@ export function CategorySection() {
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     {categories.map((cat, idx) => (
                         <motion.div
                             key={cat.title}
@@ -72,13 +72,14 @@ export function CategorySection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: idx * 0.1 }}
-                            className="group relative h-[500px] overflow-hidden cursor-pointer"
+                            className="group relative h-[400px] md:h-[500px] overflow-hidden cursor-pointer rounded-2xl md:rounded-none"
                         >
                             <Link to={cat.link}>
                                 <div className="absolute inset-0 z-0">
                                     <img
                                         src={cat.image}
                                         alt={cat.title}
+                                        loading="lazy"
                                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />

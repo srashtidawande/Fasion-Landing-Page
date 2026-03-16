@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -70,7 +70,6 @@ export function OffersGrid() {
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(3);
-    const scrollRef = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {
@@ -122,8 +121,7 @@ export function OffersGrid() {
                         dragConstraints={{ right: 0, left: -((offers.length - itemsPerPage) * (window.innerWidth / itemsPerPage + 24)) }}
                         animate={{ x: `calc(-${currentIndex * (100 / itemsPerPage)}% - ${currentIndex * (24 / itemsPerPage)}px)` }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        onDragEnd={(e, { offset, velocity }) => {
-                            const isClick = Math.abs(offset.x) < 5 && Math.abs(offset.y) < 5;
+                        onDragEnd={(e, { offset }) => {
                             const swipe = offset.x > 50 ? -1 : offset.x < -50 ? 1 : 0;
                             if (swipe !== 0) {
                                 const nextIndex = Math.max(0, Math.min(currentIndex + swipe, maxIndex));
@@ -137,8 +135,12 @@ export function OffersGrid() {
                                 className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] shrink-0"
                                 onClick={() => navigate(offer.path)}
                             >
-                                <div
-                                    className={`${offer.bg} rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group min-h-[420px] flex flex-col justify-between border border-black/5 dark:border-white/5 shadow-sm transition-transform duration-500 cursor-pointer active:scale-[0.98]`}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.8, delay: (offer.id % itemsPerPage) * 0.1 }}
+                                    className={`${offer.bg} rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group min-h-[420px] flex flex-col justify-between border border-black/5 dark:border-white/5 shadow-sm hover:shadow-2xl hover:border-accent/20 transition-all duration-500 cursor-pointer active:scale-[0.98]`}
                                 >
                                     {/* Content */}
                                     <div className="relative z-10 max-w-[70%]">
@@ -185,7 +187,7 @@ export function OffersGrid() {
                                             className="w-full h-full object-contain object-right-bottom drop-shadow-2xl"
                                         />
                                     </div>
-                                </div>
+                                </motion.div>
                             </div>
                         ))}
                     </motion.div>

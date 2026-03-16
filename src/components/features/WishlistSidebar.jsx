@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingBag, Heart } from 'lucide-react';
-import { useWishlist } from '../../context/WishlistContext';
-import { useCart } from '../../context/CartContext';
+import { useWishlist, useCart } from '../../context/hooks';
 import { Button } from '../ui/Button';
 import { useEffect, useRef } from 'react';
 

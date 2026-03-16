@@ -30,10 +30,22 @@ const departmentNames = ["All", ...departmentsData.map(d => d.name)];
 
 export function ProductGrid({ onOpenModal }) {
     const location = useLocation();
-    const [activeDepartment, setActiveDepartment] = useState("All");
-    const [activeCategory, setActiveCategory] = useState("All");
+    const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
+    
+    const [activeDepartment, setActiveDepartment] = useState(() => {
+        const dept = params.get('department');
+        return (dept && departmentNames.includes(dept)) ? dept : "All";
+    });
+    
+    const [activeCategory, setActiveCategory] = useState(() => {
+        return params.get('category') || "All";
+    });
+    
     const [sortBy, setSortBy] = useState("default");
-    const [searchTerm, setSearchTerm] = useState("");
+    
+    const [searchTerm, setSearchTerm] = useState(() => {
+        return params.get('search') || "";
+    });
 
     // Dynamic categories based on selection
     const availableCategories = useMemo(() => {
@@ -47,30 +59,15 @@ export function ProductGrid({ onOpenModal }) {
     }, [activeDepartment]);
 
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
         const deptParam = params.get('department');
         const catParam = params.get('category');
         const searchParam = params.get('search');
 
-        if (deptParam && departmentNames.includes(deptParam)) {
-            setActiveDepartment(deptParam);
-        } else {
-            setActiveDepartment("All");
-        }
-
-        // Delay category setting to ensure availableCategories is updated or handles it
-        if (catParam) {
-            setActiveCategory(catParam);
-        } else {
-            setActiveCategory("All");
-        }
-
-        if (searchParam) {
-            setSearchTerm(searchParam);
-        } else {
-            setSearchTerm("");
-        }
-    }, [location.search]);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setActiveDepartment((deptParam && departmentNames.includes(deptParam)) ? deptParam : "All");
+        setActiveCategory(catParam || "All");
+        setSearchTerm(searchParam || "");
+    }, [params]);
 
     const filteredProducts = useMemo(() => {
         let result = products;

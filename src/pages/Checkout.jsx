@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/hooks';
 import { Button } from '../components/ui/Button';
 import { ChevronRight, CreditCard, Truck, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Checkout() {
-    const { cart, cartTotal, setIsCartOpen } = useCart();
+    const { cart, cartTotal } = useCart();
     const navigate = useNavigate();
     const [step, setStep] = useState(1); // 1: Info, 2: Payment, 3: Success
     const [formData, setFormData] = useState({

@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ShoppingBag, Search, Menu, X, Heart, Sun, Moon, ChevronRight, ArrowRight, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useCart, useTheme } from '../../context/hooks';
 
 const departments = [
     {
@@ -75,50 +74,70 @@ export function Navbar({ onOpenWishlist }) {
         }, 300);
     };
 
+    const scrollToSection = (e, targetId) => {
+        if (location.pathname !== '/') return;
+        
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+            const offset = 80; // Navbar height
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     return (
         <nav
-            className={`sticky top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'glass dark:glass-dark py-2 shadow-2xl border-b border-black/5 dark:border-white/5' : 'bg-white dark:bg-[#0a0a0a] py-4'}`}
+            className={`sticky top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'glass py-2 shadow-2xl border-b border-[var(--border-color)]' : 'bg-[var(--bg-primary)] py-4'}`}
             onMouseLeave={handleMouseLeave}
         >
             <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-2 group">
-                    <span className="text-2xl font-serif font-black tracking-[0.3em] transition-all duration-500 group-hover:tracking-[0.4em] dark:text-white">
+                <Link to="/" onClick={(e) => { if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center gap-2 group">
+                    <span className="text-2xl font-serif font-black tracking-[0.3em] transition-all duration-500 group-hover:tracking-[0.4em] text-[var(--text-primary)]">
                         LUXE<span className="text-accent">•</span>
                     </span>
                 </Link>
 
                 {/* Desktop Links */}
                 <div className="hidden lg:flex items-center space-x-16">
-                    <Link to="/" className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors dark:text-white">Home</Link>
-
-                    {departments.map((dept) => (
-                        <div
-                            key={dept.name}
-                            className="relative"
-                            onMouseEnter={() => handleMouseEnter(dept.name)}
+                    <Link to="/" onClick={(e) => { if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Home</Link>
+                    <Link to="/shop" className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Shop</Link>
+                    
+                    <div 
+                        className="relative"
+                        onMouseEnter={() => handleMouseEnter('Collections')}
+                    >
+                        <a 
+                            href="#featured-pieces"
+                            onClick={(e) => scrollToSection(e, 'featured-pieces')}
+                            className={`text-[12px] uppercase tracking-[0.4em] font-bold transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === 'Collections' ? 'text-accent' : 'text-[var(--text-primary)] hover:text-accent'}`}
                         >
-                            <Link
-                                to={dept.path}
-                                className={`text-[12px] uppercase tracking-[0.4em] font-bold transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === dept.name ? 'text-accent' : 'dark:text-white hover:text-accent'}`}
-                            >
-                                {dept.name}
-                                <ChevronRight
-                                    size={12}
-                                    className={`transition-transform duration-500 ${activeDropdown === dept.name ? 'rotate-90 text-accent' : ''}`}
+                            Collections
+                            <ChevronRight 
+                                size={12} 
+                                className={`transition-transform duration-500 ${activeDropdown === 'Collections' ? 'rotate-90 text-accent' : ''}`}
+                            />
+                            {activeDropdown === 'Collections' && (
+                                <motion.div 
+                                    layoutId="navHighlight"
+                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
+                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
                                 />
-                                {activeDropdown === dept.name && (
-                                    <motion.div
-                                        layoutId="navHighlight"
-                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
-                                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                    />
-                                )}
-                            </Link>
-                        </div>
-                    ))}
+                            )}
+                        </a>
+                    </div>
 
-                    <Link to="/about" className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors dark:text-white">About</Link>
+                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">About</a>
+                    <a href="#newsletter" onClick={(e) => scrollToSection(e, 'newsletter')} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Contact</a>
                 </div>
 
                 {/* Icons */}
@@ -138,27 +157,27 @@ export function Navbar({ onOpenWishlist }) {
                         <Search size={22} strokeWidth={1.2} />
                     </button>
                     <button
-                        className="hover:text-accent dark:text-white transition-all transform hover:scale-110"
+                        className="hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110"
                         aria-label="User account"
                         onClick={() => alert('Login functionality coming soon!')}
                     >
                         <User size={22} strokeWidth={1.2} />
                     </button>
                     <button
-                        className="hover:text-accent dark:text-white transition-all transform hover:scale-110 relative"
+                        className="hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110 relative"
                         onClick={onOpenWishlist}
                         aria-label="View wishlist"
                     >
                         <Heart size={22} strokeWidth={1.2} />
                     </button>
                     <button
-                        className="relative group hover:text-accent dark:text-white transition-all transform hover:scale-110"
+                        className="relative group hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110"
                         onClick={() => setIsCartOpen(true)}
                         aria-label={`View shopping bag (${cartCount} items)`}
                     >
                         <ShoppingBag size={22} strokeWidth={1.2} />
                         {cartCount > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-accent text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-white dark:ring-black">
+                            <span className="absolute -top-2 -right-2 bg-accent text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-[var(--bg-primary)]">
                                 {cartCount}
                             </span>
                         )}
@@ -177,38 +196,39 @@ export function Navbar({ onOpenWishlist }) {
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
                     >
-                        {isMobileMenuOpen ? <X size={28} className="dark:text-white" /> : <Menu size={28} className="dark:text-white" />}
+                        {isMobileMenuOpen ? <X size={28} className="text-[var(--text-primary)]" /> : <Menu size={28} className="text-[var(--text-primary)]" />}
                     </button>
                 </div>
             </div>
 
             {/* Mega Menu Dropdown */}
             <AnimatePresence mode="wait">
-                {activeDropdown && (
+                {activeDropdown === 'Collections' && (
                     <motion.div
-                        key={activeDropdown}
+                        key="collections-dropdown"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="absolute top-full left-0 w-full glass dark:glass-dark border-b border-black/5 dark:border-white/5 shadow-2xl overflow-hidden z-40"
-                        onMouseEnter={() => handleMouseEnter(activeDropdown)}
+                        onMouseEnter={() => handleMouseEnter('Collections')}
                     >
                         {/* Dropdown Highlight Border */}
                         <div className="h-0.5 w-full bg-accent" />
                         <div className="container mx-auto px-12 py-16">
                             <div className="grid grid-cols-12 gap-16">
-                                {/* Categories */}
+                                {/* Departments */}
                                 <div className="col-span-3">
-                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Collections</h4>
+                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Shop by Department</h4>
                                     <ul className="space-y-6">
-                                        {departments.find(d => d.name === activeDropdown)?.categories.map((cat) => (
-                                            <li key={cat}>
+                                        {departments.map((dept) => (
+                                            <li key={dept.name}>
                                                 <Link
-                                                    to={`/shop?department=${activeDropdown}&category=${cat}`}
+                                                    to={dept.path}
+                                                    onClick={() => setActiveDropdown(null)}
                                                     className="group flex items-center justify-between text-sm font-serif italic text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all py-1"
                                                 >
-                                                    {cat}
+                                                    {dept.name}
                                                     <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                                                 </Link>
                                             </li>
@@ -216,46 +236,42 @@ export function Navbar({ onOpenWishlist }) {
                                     </ul>
                                 </div>
 
-                                {/* Shop Info */}
+                                {/* Lifestyle */}
                                 <div className="col-span-3 border-l border-black/10 dark:border-white/10 pl-16">
-                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Shop Services</h4>
+                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Lifestyle</h4>
                                     <ul className="space-y-6">
                                         <li>
-                                            <button
-                                                onClick={() => navigate(`/shop?department=${activeDropdown}`)}
-                                                className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors"
-                                            >
-                                                Personal Styling
-                                            </button>
+                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Sustainable Edit</button>
                                         </li>
                                         <li>
                                             <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Digital Lookbook</button>
                                         </li>
                                         <li>
-                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Exclusive Access</button>
+                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Exclusive Atelier</button>
                                         </li>
                                     </ul>
                                 </div>
 
                                 {/* Featured Image */}
                                 <div className="col-span-6">
-                                    <div className="relative group cursor-pointer overflow-hidden h-[350px]">
+                                    <div className="relative group cursor-pointer overflow-hidden h-[350px] rounded-2xl">
                                         <img
-                                            src={departments.find(d => d.name === activeDropdown)?.featured.image}
+                                            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800"
                                             alt="Featured"
                                             className="w-full h-full object-cover transition-transform duration-[2s] scale-100 group-hover:scale-105"
                                         />
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700" />
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                            <span className="text-[12px] uppercase tracking-[0.5em] mb-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Editorial</span>
-                                            <h3 className="text-4xl font-serif italic font-light tracking-tight group-hover:scale-110 transition-transform duration-1000">
-                                                {departments.find(d => d.name === activeDropdown)?.featured.title}
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-8">
+                                            <span className="text-[12px] uppercase tracking-[0.5em] mb-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 text-center">Spring Summer 2026</span>
+                                            <h3 className="text-4xl font-serif italic text-center font-light tracking-tight group-hover:scale-110 transition-transform duration-1000">
+                                                The Ethereal Collection
                                             </h3>
                                             <Link
-                                                to={departments.find(d => d.name === activeDropdown)?.path}
+                                                to="/shop"
+                                                onClick={() => setActiveDropdown(null)}
                                                 className="mt-10 px-8 py-3 glass text-[12px] uppercase tracking-[0.3em] font-bold hover:bg-white hover:text-black transition-all"
                                             >
-                                                Explore
+                                                Explore Now
                                             </Link>
                                         </div>
                                     </div>
@@ -338,34 +354,28 @@ export function Navbar({ onOpenWishlist }) {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: '100%' }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 lg:hidden bg-white/98 dark:bg-black/98 backdrop-blur-xl z-[60] pt-24 overflow-y-auto"
+                        className="fixed inset-0 lg:hidden bg-white/98 dark:bg-black/98 backdrop-blur-xl z-[60] pt-24 overflow-y-auto overscroll-contain"
                     >
                         <div className="flex flex-col p-12 space-y-12">
-                            {departments.map((dept) => (
-                                <div key={dept.name}>
-                                    <Link
-                                        to={dept.path}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="text-4xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white"
-                                    >
-                                        {dept.name}
-                                    </Link>
-                                    <div className="grid grid-cols-2 gap-4 mt-6">
-                                        {dept.categories.slice(0, 4).map(cat => (
-                                            <Link
-                                                key={cat}
-                                                to={`/shop?department=${dept.name}&category=${cat}`}
-                                                className="text-[13px] uppercase tracking-widest text-gray-400 font-bold"
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                            >
-                                                {cat}
-                                            </Link>
-                                        ))}
+                            <div className="space-y-8">
+                                <Link to="/" onClick={(e) => { setIsMobileMenuOpen(false); if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Home</Link>
+                                <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Shop</Link>
+                                
+                                <div>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent mb-6 block">Collections</span>
+                                    <div className="flex flex-wrap gap-4">
+                                        <a href="#featured-pieces" onClick={(e) => scrollToSection(e, 'featured-pieces')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Featured</a>
+                                        <a href="#categories" onClick={(e) => scrollToSection(e, 'categories')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Departments</a>
+                                        <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Reviews</a>
                                     </div>
                                 </div>
-                            ))}
+
+                                <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">About</a>
+                                <a href="#newsletter" onClick={(e) => scrollToSection(e, 'newsletter')} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Contact</a>
+                            </div>
+
                             <div className="pt-12 border-t border-black/5 dark:border-white/5 flex flex-col space-y-8">
-                                <Link to="/about" className="text-sm uppercase tracking-widest font-bold dark:text-white">Our Story</Link>
+                                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-sm uppercase tracking-widest font-bold dark:text-white">Our Story</Link>
                                 <button
                                     onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false); }}
                                     className="flex items-center gap-4 text-sm uppercase tracking-widest font-bold dark:text-white"

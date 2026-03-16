@@ -24,7 +24,7 @@ export function Lookbook() {
         <section className="py-24 bg-white dark:bg-[#0f0f0f] transition-colors duration-300 overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col space-y-32">
-                    {lookbookItems.map((item, index) => (
+                    {lookbookItems.map((item) => (
                         <div
                             key={item.id}
                             className={`flex flex-col ${item.alignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24`}
