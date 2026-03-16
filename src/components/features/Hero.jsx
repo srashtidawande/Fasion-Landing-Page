@@ -22,7 +22,7 @@ const slides = [
         title: "Organic Luxury",
         subtitle: "Season Collective",
         description: "Celebrating the innate beauty of natural fibers and sophisticated, sustainable silhouettes.",
-        image: "https://images.unsplash.com/photo-1510511459019-5dee2da767ac?auto=format&fit=crop&q=80&w=1920"
+        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=1920"
     }
 ];
 
