@@ -9,7 +9,7 @@ const offers = [
         title: "The Resort Issue",
         subtitle: "From ₹2,499*",
         description: "Sale starts 13th March, 12 PM",
-        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800",
         bg: "bg-[#f8f8f8]",
         textColor: "text-black",
         badge: "NEW ARRIVALS",
