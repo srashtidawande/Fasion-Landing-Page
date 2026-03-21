@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 
 export function Shop({ onOpenModal }) {
     return (
-        <div className="pt-32 pb-24">
-            <div className="container mx-auto px-6">
+        <section id="collections" className="section-padding bg-[var(--bg-primary)] transition-colors duration-500">
+            <div className="container-custom">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-16 text-center space-y-4"
+                    className="mb-24 text-center"
                 >
-                    <h1 className="text-5xl md:text-6xl font-serif font-light tracking-tight italic dark:text-white transition-colors">The Collection</h1>
-                    <p className="text-muted dark:text-gray-400 tracking-[0.3em] uppercase text-xs transition-colors">Curated Excellence for Every Occasion</p>
+                    <span className="overline-text text-accent mb-6">The Collection</span>
+                    <h1 className="heading-luxury">Curated <span className="not-italic font-bold">Excellence</span></h1>
                 </motion.div>
 
                 <ProductGrid onOpenModal={onOpenModal} />
             </div>
-        </div>
+        </section>
     );
 }

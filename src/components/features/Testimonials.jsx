@@ -30,14 +30,14 @@ const testimonials = [
 
 export function Testimonials() {
     return (
-        <section id="testimonials" className="section-padding bg-[#fafafa] dark:bg-[#0d0d0d] overflow-hidden">
-            <div className="container mx-auto px-6 md:px-12">
-                <div className="text-center mb-16">
+        <section id="testimonials" className="section-padding bg-[var(--bg-primary)] overflow-hidden">
+            <div className="container-custom">
+                <div className="text-center mb-24">
                     <motion.span 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-[10px] font-black uppercase tracking-[0.5em] text-accent mb-4 block"
+                        className="overline-text"
                     >
                         Voice of our clients
                     </motion.span>
@@ -46,43 +46,45 @@ export function Testimonials() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-serif italic dark:text-white"
+                        className="heading-luxury-sm"
                      >
-                        Stories of Style
+                        Stories of <span className="not-italic font-bold">Style</span>
                     </motion.h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {testimonials.map((t, idx) => (
                         <motion.div
                             key={t.id}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 + 0.2 }}
-                            className="bg-white dark:bg-[#141414] p-10 rounded-[2rem] shadow-sm border border-black/5 dark:border-white/5 relative group hover:-translate-y-2 transition-transform duration-500"
+                            transition={{ delay: idx * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            className="bg-[var(--bg-secondary)] p-12 rounded-[2.5rem] border border-[var(--border-color)] relative group hover-lift"
                         >
-                            <Quote className="text-accent/20 absolute top-8 right-8 group-hover:text-accent/40 transition-colors" size={40} />
+                            <Quote className="text-accent/10 absolute top-10 right-10 group-hover:text-accent/30 group-hover:scale-125 transition-all duration-700 ease-[0.22, 1, 0.36, 1]" size={56} />
                             
-                            <div className="flex gap-1 mb-6">
+                            <div className="flex gap-1.5 mb-8">
                                 {[...Array(5)].map((_, i) => (
                                     <Star 
                                         key={i} 
                                         size={14} 
-                                        className={i < t.rating ? "fill-accent text-accent" : "text-gray-300 dark:text-gray-700"} 
+                                        className={i < t.rating ? "fill-accent text-accent" : "text-[var(--text-secondary)]/30"} 
                                     />
                                 ))}
                             </div>
 
-                            <p className="text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-8 italic">
+                            <p className="text-[var(--text-secondary)] font-light leading-relaxed mb-10 italic text-lg border-l-2 border-accent/20 pl-6">
                                 "{t.content}"
                             </p>
 
-                            <div className="flex items-center gap-4">
-                                <img src={t.image} alt={t.author} loading="lazy" className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                            <div className="flex items-center gap-5">
+                                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent/20">
+                                    <img src={t.image} alt={t.author} loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                </div>
                                 <div>
-                                    <h4 className="text-sm font-bold dark:text-white">{t.author}</h4>
-                                    <p className="text-[10px] uppercase tracking-widest text-gray-500">{t.role}</p>
+                                    <h4 className="text-sm font-black text-[var(--text-primary)] tracking-widest uppercase">{t.author}</h4>
+                                    <p className="text-[10px] uppercase tracking-[0.3em] text-accent mt-1 font-bold">{t.role}</p>
                                 </div>
                             </div>
                         </motion.div>

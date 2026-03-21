@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { ShoppingBag, Search, Menu, X, Heart, Sun, Moon, ChevronRight, ArrowRight, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCart, useTheme } from '../../context/hooks';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useCart, useTheme, useNotification } from '../../context/hooks';
 
 const departments = [
     {
@@ -49,11 +49,13 @@ export function Navbar({ onOpenWishlist }) {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const timeoutRef = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     const { cartCount, setIsCartOpen } = useCart();
     const { theme, toggleTheme } = useTheme();
+    const { showNotification } = useNotification();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -99,7 +101,7 @@ export function Navbar({ onOpenWishlist }) {
             className={`sticky top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'glass py-2 shadow-2xl border-b border-[var(--border-color)]' : 'bg-[var(--bg-primary)] py-4'}`}
             onMouseLeave={handleMouseLeave}
         >
-            <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+            <div className="container-custom flex items-center justify-between">
                 {/* Logo */}
                 <Link to="/" onClick={(e) => { if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center gap-2 group">
                     <span className="text-2xl font-serif font-black tracking-[0.3em] transition-all duration-500 group-hover:tracking-[0.4em] text-[var(--text-primary)]">
@@ -108,9 +110,9 @@ export function Navbar({ onOpenWishlist }) {
                 </Link>
 
                 {/* Desktop Links */}
-                <div className="hidden lg:flex items-center space-x-16">
-                    <Link to="/" onClick={(e) => { if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Home</Link>
-                    <Link to="/shop" className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Shop</Link>
+                <div className="hidden lg:flex items-center space-x-12">
+                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/shop" className="nav-link">Shop</Link>
                     
                     <div 
                         className="relative"
@@ -119,7 +121,7 @@ export function Navbar({ onOpenWishlist }) {
                         <a 
                             href="#featured-pieces"
                             onClick={(e) => scrollToSection(e, 'featured-pieces')}
-                            className={`text-[12px] uppercase tracking-[0.4em] font-bold transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === 'Collections' ? 'text-accent' : 'text-[var(--text-primary)] hover:text-accent'}`}
+                            className={`nav-link transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === 'Collections' ? 'text-accent' : ''}`}
                         >
                             Collections
                             <ChevronRight 
@@ -136,48 +138,48 @@ export function Navbar({ onOpenWishlist }) {
                         </a>
                     </div>
 
-                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">About</a>
-                    <a href="#newsletter" onClick={(e) => scrollToSection(e, 'newsletter')} className="text-[12px] uppercase tracking-[0.4em] font-bold hover:text-accent transition-colors text-[var(--text-primary)]">Contact</a>
+                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="nav-link">About</a>
+                    <Link to="/contact" className="nav-link">Contact</Link>
                 </div>
 
                 {/* Icons */}
-                <div className="hidden md:flex items-center space-x-8 lg:space-x-12">
+                <div className="hidden md:flex items-center space-x-8">
                     <button
                         onClick={toggleTheme}
-                        className="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all text-gray-700 dark:text-gray-300"
+                        className="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all text-[var(--text-primary)]"
                         aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
                     >
-                        {theme === 'light' ? <Moon size={20} strokeWidth={1.2} /> : <Sun size={20} strokeWidth={1.2} />}
+                        {theme === 'light' ? <Moon size={18} strokeWidth={1.5} /> : <Sun size={18} strokeWidth={1.5} />}
                     </button>
                     <button
-                        className="hover:text-accent dark:text-white transition-all transform hover:scale-110"
+                        className="text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
                         aria-label="Search products"
                         onClick={() => setIsSearchOpen(true)}
                     >
-                        <Search size={22} strokeWidth={1.2} />
+                        <Search size={20} strokeWidth={1.5} />
+                    </button>
+                        <button
+                            className="text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
+                            aria-label="User Account"
+                            onClick={() => showNotification('Login functionality coming soon!', 'info')}
+                        >
+                        <User size={20} strokeWidth={1.5} />
                     </button>
                     <button
-                        className="hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110"
-                        aria-label="User account"
-                        onClick={() => alert('Login functionality coming soon!')}
-                    >
-                        <User size={22} strokeWidth={1.2} />
-                    </button>
-                    <button
-                        className="hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110 relative"
+                        className="relative text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
+                        aria-label="Wishlist"
                         onClick={onOpenWishlist}
-                        aria-label="View wishlist"
                     >
-                        <Heart size={22} strokeWidth={1.2} />
+                        <Heart size={20} strokeWidth={1.5} />
                     </button>
                     <button
-                        className="relative group hover:text-accent text-[var(--text-primary)] transition-all transform hover:scale-110"
+                        className="relative group text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
+                        aria-label={`Shopping Cart (${cartCount} items)`}
                         onClick={() => setIsCartOpen(true)}
-                        aria-label={`View shopping bag (${cartCount} items)`}
                     >
-                        <ShoppingBag size={22} strokeWidth={1.2} />
+                        <ShoppingBag size={20} strokeWidth={1.5} />
                         {cartCount > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-accent text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-[var(--bg-primary)]">
+                            <span className="absolute -top-1.5 -right-1.5 bg-accent text-white text-[9px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-[var(--bg-primary)]">
                                 {cartCount}
                             </span>
                         )}
@@ -188,15 +190,15 @@ export function Navbar({ onOpenWishlist }) {
                 <div className="flex items-center space-x-4 lg:hidden">
                     <button
                         onClick={toggleTheme}
-                        className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                        className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-[var(--text-primary)]"
                     >
-                        {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                        className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors"
                     >
-                        {isMobileMenuOpen ? <X size={28} className="text-[var(--text-primary)]" /> : <Menu size={28} className="text-[var(--text-primary)]" />}
+                        {isMobileMenuOpen ? <X size={26} className="text-[var(--text-primary)]" /> : <Menu size={26} className="text-[var(--text-primary)]" />}
                     </button>
                 </div>
             </div>
@@ -210,26 +212,25 @@ export function Navbar({ onOpenWishlist }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute top-full left-0 w-full glass dark:glass-dark border-b border-black/5 dark:border-white/5 shadow-2xl overflow-hidden z-40"
+                        className="absolute top-full left-0 w-full bg-[var(--bg-primary)] border-b border-[var(--border-color)] shadow-2xl overflow-hidden z-40"
                         onMouseEnter={() => handleMouseEnter('Collections')}
                     >
-                        {/* Dropdown Highlight Border */}
-                        <div className="h-0.5 w-full bg-accent" />
-                        <div className="container mx-auto px-12 py-16">
+                        <div className="h-[2px] w-full bg-accent/30" />
+                        <div className="container-custom py-20">
                             <div className="grid grid-cols-12 gap-16">
                                 {/* Departments */}
                                 <div className="col-span-3">
-                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Shop by Department</h4>
-                                    <ul className="space-y-6">
+                                    <h4 className="overline-text">Shop by Department</h4>
+                                    <ul className="space-y-4">
                                         {departments.map((dept) => (
                                             <li key={dept.name}>
                                                 <Link
                                                     to={dept.path}
                                                     onClick={() => setActiveDropdown(null)}
-                                                    className="group flex items-center justify-between text-sm font-serif italic text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-all py-1"
+                                                    className="group flex items-center justify-between text-sm font-serif italic text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:translate-x-2 transition-all py-1"
                                                 >
                                                     {dept.name}
-                                                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                                                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-accent" />
                                                 </Link>
                                             </li>
                                         ))}
@@ -237,42 +238,45 @@ export function Navbar({ onOpenWishlist }) {
                                 </div>
 
                                 {/* Lifestyle */}
-                                <div className="col-span-3 border-l border-black/10 dark:border-white/10 pl-16">
-                                    <h4 className="text-[12px] uppercase tracking-[0.5em] font-black text-accent mb-10">Lifestyle</h4>
-                                    <ul className="space-y-6">
+                                <div className="col-span-3 border-l border-[var(--border-color)] pl-16">
+                                    <h4 className="overline-text">Lifestyle</h4>
+                                    <ul className="space-y-4">
                                         <li>
-                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Sustainable Edit</button>
+                                            <button className="text-[12px] uppercase tracking-widest font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:translate-x-2 transition-all">Sustainable Edit</button>
                                         </li>
                                         <li>
-                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Digital Lookbook</button>
+                                            <button className="text-[12px] uppercase tracking-widest font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:translate-x-2 transition-all">Digital Lookbook</button>
                                         </li>
                                         <li>
-                                            <button className="text-[13px] uppercase tracking-widest font-bold text-gray-500 hover:text-black dark:hover:text-white transition-colors">Exclusive Atelier</button>
+                                            <button className="text-[12px] uppercase tracking-widest font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:translate-x-2 transition-all">Exclusive Atelier</button>
                                         </li>
                                     </ul>
                                 </div>
 
                                 {/* Featured Image */}
                                 <div className="col-span-6">
-                                    <div className="relative group cursor-pointer overflow-hidden h-[350px] rounded-2xl">
+                                    <div className="relative group cursor-pointer overflow-hidden h-[340px] rounded-2xl">
                                         <img
                                             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800"
                                             alt="Featured"
-                                            className="w-full h-full object-cover transition-transform duration-[2s] scale-100 group-hover:scale-105"
+                                            className="w-full h-full object-cover transition-transform duration-[2s] scale-100 group-hover:scale-110"
                                         />
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700" />
                                         <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-8">
-                                            <span className="text-[12px] uppercase tracking-[0.5em] mb-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 text-center">Spring Summer 2026</span>
-                                            <h3 className="text-4xl font-serif italic text-center font-light tracking-tight group-hover:scale-110 transition-transform duration-1000">
+                                            <span className="text-[10px] uppercase tracking-[0.4em] mb-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Spring Summer 2026</span>
+                                            <h3 className="text-3xl font-serif italic text-center font-light tracking-tight group-hover:scale-105 transition-transform duration-1000">
                                                 The Ethereal Collection
                                             </h3>
-                                            <Link
-                                                to="/shop"
-                                                onClick={() => setActiveDropdown(null)}
-                                                className="mt-10 px-8 py-3 glass text-[12px] uppercase tracking-[0.3em] font-bold hover:bg-white hover:text-black transition-all"
-                                            >
-                                                Explore Now
-                                            </Link>
+                                            <div className="mt-8 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-100">
+                                                <Button 
+                                                    variant="glass" 
+                                                    size="sm" 
+                                                    pill 
+                                                    onClick={() => { setActiveDropdown(null); navigate('/shop'); }}
+                                                >
+                                                    Explore
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -289,20 +293,20 @@ export function Navbar({ onOpenWishlist }) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-white dark:bg-black"
+                        className="fixed inset-0 z-[100] glass-dark"
                     >
-                        <div className="container mx-auto px-6 h-full flex flex-col">
-                            <div className="flex justify-end py-8">
+                        <div className="container-custom h-full flex flex-col">
+                            <div className="flex justify-end py-10">
                                 <button
                                     onClick={() => setIsSearchOpen(false)}
-                                    className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                    className="p-3 hover:bg-white/10 rounded-full transition-colors"
                                 >
-                                    <X size={32} className="dark:text-white" />
+                                    <X size={32} className="text-white" />
                                 </button>
                             </div>
                             <div className="flex-1 flex flex-col items-center justify-center -mt-20">
                                 <motion.div
-                                    initial={{ y: 20, opacity: 0 }}
+                                    initial={{ y: 30, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
                                     className="w-full max-w-4xl"
@@ -311,7 +315,7 @@ export function Navbar({ onOpenWishlist }) {
                                         <input
                                             autoFocus
                                             type="text"
-                                            placeholder="What are you looking for?"
+                                            placeholder="Explore the collection..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             onKeyDown={(e) => {
@@ -320,20 +324,20 @@ export function Navbar({ onOpenWishlist }) {
                                                     setIsSearchOpen(false);
                                                 }
                                             }}
-                                            className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 py-8 text-4xl md:text-6xl font-serif italic focus:outline-none focus:border-accent transition-all dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-800"
+                                            className="w-full bg-transparent border-b-2 border-white/10 py-8 text-4xl md:text-7xl font-serif italic focus:outline-none focus:border-accent transition-all text-white placeholder:text-white/20"
                                         />
-                                        <Search size={40} className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300 dark:text-gray-800 group-focus-within:text-accent transition-colors" />
+                                        <Search size={40} className="absolute right-0 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-accent transition-colors" />
                                     </div>
-                                    <div className="mt-12 flex flex-wrap gap-4 justify-center">
-                                        <span className="text-xs uppercase tracking-[0.3em] text-gray-400 w-full text-center mb-4">Suggested Searches</span>
-                                        {['Dresses', 'Tops', 'Outerwear', 'Accessories'].map((tag) => (
+                                    <div className="mt-16 flex flex-wrap gap-4 justify-center">
+                                        <span className="text-[10px] uppercase tracking-[0.4em] text-white/40 w-full text-center mb-4">Trending Now</span>
+                                        {['New Arrivals', 'Menswear', 'Resort', 'Accessories'].map((tag) => (
                                             <button
                                                 key={tag}
                                                 onClick={() => {
                                                     navigate(`/shop?category=${tag}`);
                                                     setIsSearchOpen(false);
                                                 }}
-                                                className="px-6 py-2 border border-black/10 dark:border-white/10 rounded-full text-xs uppercase tracking-widest hover:border-accent hover:text-accent transition-all dark:text-white"
+                                                className="px-8 py-3 border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-white hover:border-accent hover:text-accent transition-all backdrop-blur-md"
                                             >
                                                 {tag}
                                             </button>
@@ -353,41 +357,40 @@ export function Navbar({ onOpenWishlist }) {
                         initial={{ opacity: 0, x: '100%' }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: '100%' }}
-                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 lg:hidden bg-white/98 dark:bg-black/98 backdrop-blur-xl z-[60] pt-24 overflow-y-auto overscroll-contain"
+                        transition={{ type: "spring", damping: 35, stiffness: 300 }}
+                        className="fixed inset-0 lg:hidden glass-dark pt-24 overflow-y-auto z-[60]"
                     >
-                        <div className="flex flex-col p-12 space-y-12">
-                            <div className="space-y-8">
-                                <Link to="/" onClick={(e) => { setIsMobileMenuOpen(false); if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Home</Link>
-                                <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Shop</Link>
-                                
-                                <div>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent mb-6 block">Collections</span>
-                                    <div className="flex flex-wrap gap-4">
-                                        <a href="#featured-pieces" onClick={(e) => scrollToSection(e, 'featured-pieces')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Featured</a>
-                                        <a href="#categories" onClick={(e) => scrollToSection(e, 'categories')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Departments</a>
-                                        <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">Reviews</a>
+                        <div className="container px-8 pb-20">
+                            <div className="flex flex-col space-y-12">
+                                <div className="space-y-6">
+                                    <Link to="/" onClick={(e) => { setIsMobileMenuOpen(false); if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Home</Link>
+                                    <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Shop</Link>
+                                    
+                                    <div className="py-6">
+                                        <h4 className="overline-text mb-6">Collections</h4>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <a href="#featured-pieces" onClick={(e) => scrollToSection(e, 'featured-pieces')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Featured</a>
+                                            <a href="#categories" onClick={(e) => scrollToSection(e, 'categories')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Categories</a>
+                                            <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Reviews</a>
+                                        </div>
                                     </div>
+
+                                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">About</a>
+                                    <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Contact</Link>
                                 </div>
 
-                                <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">About</a>
-                                <a href="#newsletter" onClick={(e) => scrollToSection(e, 'newsletter')} className="text-3xl font-serif italic border-b border-black/5 dark:border-white/5 pb-4 block dark:text-white">Contact</a>
-                            </div>
-
-                            <div className="pt-12 border-t border-black/5 dark:border-white/5 flex flex-col space-y-8">
-                                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-sm uppercase tracking-widest font-bold dark:text-white">Our Story</Link>
-                                <button
-                                    onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false); }}
-                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-bold dark:text-white"
-                                >
-                                    <ShoppingBag size={20} /> Cart ({cartCount})
-                                </button>
-                                <button
-                                    onClick={() => { alert('Login functionality coming soon!'); setIsMobileMenuOpen(false); }}
-                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-bold dark:text-white"
-                                >
-                                    <User size={20} /> Login / Register
-                                </button>
+                                    <button
+                                        onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false); }}
+                                        className="flex items-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
+                                    >
+                                        <ShoppingBag size={20} className="text-accent" /> Shopping Bag ({cartCount})
+                                    </button>
+                                    <button
+                                        onClick={() => { alert('Login functionality coming soon!'); setIsMobileMenuOpen(false); }}
+                                        className="flex items-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
+                                    >
+                                        <User size={20} className="text-accent" /> Account / Login
+                                    </button>
                             </div>
                         </div>
                     </motion.div>

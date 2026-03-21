@@ -20,6 +20,16 @@ export function Checkout() {
         expiry: '',
         cvv: ''
     });
+    const [orderId, setOrderId] = useState('');
+
+    const generateOrderId = () => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = 'LX-2026-';
+        for (let i = 0; i < 4; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
 
     if (cart.length === 0 && step !== 3) {
         return (
@@ -39,6 +49,7 @@ export function Checkout() {
 
     const handleCheckout = (e) => {
         e.preventDefault();
+        setOrderId(generateOrderId());
         setStep(3);
     };
 
@@ -194,7 +205,8 @@ export function Checkout() {
                                         )}
                                         <Button
                                             type="submit"
-                                            className="px-12 py-5 bg-black text-white dark:bg-white dark:text-black hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition-all duration-500 shadow-xl"
+                                            variant="primary"
+                                            className="px-12 py-5 shadow-xl"
                                         >
                                             {step === 1 ? 'Continue to Payment' : 'Complete Purchase'}
                                         </Button>
@@ -253,21 +265,64 @@ export function Checkout() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-8"
                         >
-                            <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center text-accent">
-                                <CheckCircle2 size={48} strokeWidth={1} />
+                            <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center text-accent mb-4 shadow-[0_0_50px_rgba(var(--accent-rgb),0.2)]">
+                                <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.2 }}
+                                >
+                                    <CheckCircle2 size={48} strokeWidth={1} />
+                                </motion.div>
                             </div>
                             <div className="space-y-4">
-                                <h1 className="text-5xl font-serif italic dark:text-white">Ordered Successfully</h1>
-                                <p className="text-[10px] uppercase tracking-[0.5em] font-black text-gray-400">Order #LX-2026-9842</p>
+                                <motion.span 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="text-[10px] uppercase tracking-[0.5em] font-black text-accent"
+                                >
+                                    Thank you for your trust
+                                </motion.span>
+                                <motion.h1 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="text-5xl md:text-7xl font-serif italic dark:text-white"
+                                >
+                                    Welcome to <br />
+                                    <span className="not-italic font-bold">the Collective</span>
+                                </motion.h1>
+                                <motion.p 
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.6 }}
+                                    className="text-[10px] uppercase tracking-[0.5em] font-black text-gray-400"
+                                >
+                                    Order ID: {orderId}
+                                </motion.p>
                             </div>
-                            <p className="max-w-md text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Thank you for your purchase, {formData.firstName}. We've sent a confirmation email to {formData.email} and will notify you as soon as your collection has been dispatched.
-                            </p>
-                            <div className="pt-8">
-                                <Button onClick={() => navigate('/shop')} variant="primary" className="px-16 py-6 bg-black text-white dark:bg-white dark:text-black">
-                                    Return to Catalog
+                            <motion.p 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.7 }}
+                                className="max-w-md text-gray-500 dark:text-gray-400 text-sm leading-relaxed"
+                            >
+                                Your order has been received and is being prepared with the utmost care. 
+                                We'll notify you as soon as your items are ready for shipment.
+                            </motion.p>
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.8 }}
+                                className="pt-8 flex flex-col sm:flex-row gap-4"
+                            >
+                                <Button onClick={() => navigate('/shop')} variant="primary" className="px-16 py-6 dark:bg-white dark:text-black">
+                                    Return to Shop
                                 </Button>
-                            </div>
+                                <Button variant="outline" className="px-12 py-6 dark:border-white/10 dark:text-white" onClick={() => navigate('/')}>
+                                    Go Home
+                                </Button>
+                            </motion.div>
                         </motion.div>
                     )}
                 </AnimatePresence>

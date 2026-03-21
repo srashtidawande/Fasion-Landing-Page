@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { WishlistContext } from './contexts/WishlistContext';
+import { WishlistContext } from './WishlistContext.js';
 
 export function WishlistProvider({ children }) {
     const [wishlist, setWishlist] = useState(() => {

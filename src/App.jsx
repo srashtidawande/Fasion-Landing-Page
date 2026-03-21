@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CartProvider } from './context/CartContext';
-import { WishlistProvider } from './context/WishlistContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { CartProvider } from './context/CartProvider';
+import { WishlistProvider } from './context/WishlistProvider';
+import { ThemeProvider } from './context/ThemeProvider';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { CartSidebar } from './components/features/CartSidebar';
@@ -19,6 +19,19 @@ import { Contact } from './pages/Contact';
 import { Checkout } from './pages/Checkout';
 
 import { Preloader } from './components/ui/Preloader';
+
+const AnimatedPage = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    {children}
+  </motion.div>
+);
+
+import { NotificationProvider } from './context/NotificationContext';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -52,62 +65,44 @@ function App() {
 
   return (
     <ThemeProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <div className="font-sans text-primary dark:text-[#f5f5f5] transition-colors duration-300">
-            <AnimatePresence mode="wait">
-              {isLoading && <Preloader key="loader" />}
-            </AnimatePresence>
-            
-            <CustomCursor />
-            <Navbar onOpenWishlist={() => setIsWishlistOpen(true)} />
-
-            <main className="min-h-screen">
+      <NotificationProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <div className="font-sans text-primary dark:text-[#f5f5f5] transition-colors duration-300">
               <AnimatePresence mode="wait">
-                <Routes location={location} key={location.pathname}>
-                  <Route path="/" element={
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-                      <Home onOpenModal={handleOpenModal} />
-                    </motion.div>
-                  } />
-                  <Route path="/shop" element={
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-                      <Shop onOpenModal={handleOpenModal} />
-                    </motion.div>
-                  } />
-                  <Route path="/about" element={
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-                      <About />
-                    </motion.div>
-                  } />
-                  <Route path="/contact" element={
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-                      <Contact />
-                    </motion.div>
-                  } />
-                  <Route path="/checkout" element={
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-                      <Checkout />
-                    </motion.div>
-                  } />
-                </Routes>
+                {isLoading && <Preloader key="loader" />}
               </AnimatePresence>
-            </main>
+              
+              <CustomCursor />
+              <Navbar onOpenWishlist={() => setIsWishlistOpen(true)} />
 
-            <Footer />
+              <main className="min-h-screen">
+                <AnimatePresence mode="wait">
+                  <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={<AnimatedPage><Home onOpenModal={handleOpenModal} /></AnimatedPage>} />
+                    <Route path="/shop" element={<AnimatedPage><Shop onOpenModal={handleOpenModal} /></AnimatedPage>} />
+                    <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
+                    <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
+                    <Route path="/checkout" element={<AnimatedPage><Checkout /></AnimatedPage>} />
+                  </Routes>
+                </AnimatePresence>
+              </main>
 
-            <CartSidebar />
-            <WishlistSidebar isOpen={isWishlistOpen} setIsOpen={setIsWishlistOpen} />
-            <ProductModal
-              product={selectedProduct}
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-            />
-            <NewsletterModal />
-            <BackToTop />
-          </div>
-        </WishlistProvider>
-      </CartProvider>
+              <Footer />
+
+              <CartSidebar />
+              <WishlistSidebar isOpen={isWishlistOpen} setIsOpen={setIsWishlistOpen} />
+              <ProductModal
+                product={selectedProduct}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+              />
+              <NewsletterModal />
+              <BackToTop />
+            </div>
+          </WishlistProvider>
+        </CartProvider>
+      </NotificationProvider>
     </ThemeProvider>
   );
 }

@@ -8,29 +8,39 @@ const slides = [
         title: "Discover Your Style",
         subtitle: "Luxury Redefined • Spring 2026",
         description: "Experience the curated collection of modern fashion, where minimalist design meets exceptional craftsmanship.",
-        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1920"
+        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1440"
     },
     {
         id: 2,
         title: "Timeless Craft",
         subtitle: "Exclusive Atelier",
         description: "Meticulously crafted pieces designed to gracefully transcend trends and generations.",
-        image: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=1920"
+        image: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=1440"
     },
     {
         id: 3,
         title: "Organic Luxury",
         subtitle: "Season Collective",
         description: "Celebrating the innate beauty of natural fibers and sophisticated, sustainable silhouettes.",
-        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=1920"
+        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=1440"
     }
 ];
 
 export function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef(null);
     
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"]
@@ -39,6 +49,7 @@ export function Hero() {
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     useEffect(() => {
+        if (isMobile) return;
         const handleMouseMove = (e) => {
             setMousePos({
                 x: (e.clientX / window.innerWidth - 0.5) * 20,
@@ -47,7 +58,7 @@ export function Hero() {
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, [isMobile]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -76,7 +87,7 @@ export function Hero() {
                     style={{ y }}
                 >
                     <motion.div
-                        animate={{ 
+                        animate={isMobile ? {} : { 
                             x: mousePos.x,
                             y: mousePos.y,
                             scale: 1.05
@@ -89,6 +100,7 @@ export function Hero() {
                             key={slides[currentSlide].image}
                             src={slides[currentSlide].image}
                             alt={slides[currentSlide].title}
+                            loading={currentSlide === 0 ? "eager" : "lazy"}
                             initial={{ scale: 1 }}
                             animate={{ scale: 1.1 }}
                             transition={{ 
@@ -104,20 +116,20 @@ export function Hero() {
             </AnimatePresence>
 
             {/* Content Container */}
-            <div className="relative z-20 container mx-auto px-6 flex flex-col items-center">
+            <div className="relative z-20 container-custom flex flex-col items-center">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentSlide}
                         className="text-center"
                     >
-                        <motion.div
+                        <motion.span
                             initial={{ opacity: 0, letterSpacing: "0.2em" }}
                             animate={{ opacity: 1, letterSpacing: "0.5em" }}
                             transition={{ duration: 1, delay: 0.5 }}
-                            className="text-[var(--text-primary)] uppercase text-[10px] md:text-xs font-black mb-8 block drop-shadow-lg"
+                            className="overline-text text-white/90 drop-shadow-md"
                         >
                             {slides[currentSlide].subtitle}
-                        </motion.div>
+                        </motion.span>
 
                         <h1 className="flex flex-wrap justify-center mb-10 overflow-hidden py-4">
                             {slides[currentSlide].title.split("").map((char, index) => (
@@ -130,7 +142,8 @@ export function Hero() {
                                         delay: 0.05 * index + 0.5,
                                         ease: [0.22, 1, 0.36, 1]
                                     }}
-                                    className={`text-[clamp(3.5rem,15vw,11rem)] font-serif font-light text-[var(--text-primary)] tracking-tighter leading-[0.85] ${char === " " ? "mr-[clamp(1.5rem,5vw,2.5rem)]" : ""}`}
+                                    className={`heading-luxury text-white drop-shadow-2xl ${char === " " ? "mr-[clamp(1rem,4vw,2rem)]" : ""}`}
+                                    style={{ fontSize: 'clamp(3rem, 12vw, 10rem)' }}
                                 >
                                     {char}
                                 </motion.span>
@@ -143,14 +156,16 @@ export function Hero() {
                             transition={{ duration: 1, delay: 1.5 }}
                             className="flex flex-col md:flex-row gap-8 justify-center items-center"
                         >
-                            <p className="text-[var(--text-primary)]/70 text-sm md:text-base max-w-sm font-light tracking-widest leading-relaxed italic md:text-left md:border-l border-[var(--text-primary)]/20 md:pl-8">
+                            <p className="text-white/70 text-sm md:text-base max-w-sm font-light tracking-[0.2em] leading-relaxed italic md:text-left md:border-l border-white/20 md:pl-8">
                                 {slides[currentSlide].description}
                             </p>
                             <div className="flex gap-4">
                                 <Button 
-                                    variant="primary" 
+                                    variant="glass" 
+                                    size="lg"
+                                    pill
                                     onClick={scrollToCollections}
-                                    className="glass text-[var(--text-primary)] border-[var(--border-color)] px-12 py-5 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all font-bold tracking-[0.3em] text-[10px] group"
+                                    className="font-bold tracking-[0.4em] text-white hover:bg-white hover:text-black transition-all duration-500"
                                 >
                                     Shop Now
                                 </Button>

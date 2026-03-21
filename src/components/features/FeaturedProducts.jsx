@@ -59,34 +59,40 @@ export function FeaturedProducts({ onOpenModal }) {
     const slideX = `calc(${currentIndex * (100 / itemsPerPage)}% + ${currentIndex * gapPx * (1 - 1 / itemsPerPage)}px)`;
 
     return (
-        <section id="featured-pieces" className="section-padding bg-white dark:bg-[#0a0a0a] overflow-hidden">
-            <div className="container mx-auto px-6 md:px-12">
+        <section id="featured-pieces" className="section-padding bg-[var(--bg-primary)] overflow-hidden">
+            <div className="container-custom">
                 {/* Header */}
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
-                    <div className="max-w-xl">
-                        <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent mb-4 block">Our Curation</span>
-                        <h2 className="text-4xl md:text-6xl font-serif italic dark:text-white leading-[1.1]">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        className="max-w-xl"
+                    >
+                        <span className="overline-text">Our Curation</span>
+                        <h2 className="heading-luxury">
                             The Featured <br />
                             <span className="font-light not-italic">Collection</span>
                         </h2>
-                    </div>
+                    </motion.div>
 
                     <div className="flex flex-col md:flex-row items-center gap-8">
                         {/* Category Filters */}
-                        <div className="flex flex-wrap gap-1 md:gap-2 justify-center md:justify-start">
+                        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                             {filters.map((f) => (
                                 <button
                                     key={f.id}
                                     onClick={() => handleFilterChange(f.id)}
-                                    className={`relative px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.35em] font-bold transition-all duration-400 ${
+                                    className={`relative px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.3em] font-black transition-all duration-500 ${
                                         filter === f.id
-                                            ? 'bg-accent text-white shadow-md shadow-accent/25'
-                                            : 'text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                                            ? 'bg-accent text-white shadow-xl shadow-accent/20'
+                                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
                                     }`}
                                 >
                                     {f.label}
                                     {f.id === 'New Arrivals' && filter !== 'New Arrivals' && (
-                                        <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-accent align-middle" />
+                                        <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                                     )}
                                 </button>
                             ))}
@@ -98,25 +104,17 @@ export function FeaturedProducts({ onOpenModal }) {
                                 onClick={prev}
                                 disabled={currentIndex === 0}
                                 aria-label="Previous products"
-                                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-500 border-black/10 dark:border-white/10 ${
-                                    currentIndex === 0
-                                        ? 'opacity-20 cursor-not-allowed'
-                                        : 'hover:border-accent hover:bg-accent hover:text-white dark:text-white'
-                                }`}
+                                className="icon-button-circle"
                             >
-                                <ChevronLeft size={20} />
+                                <ChevronLeft size={18} />
                             </button>
                             <button
                                 onClick={next}
                                 disabled={currentIndex === maxIndex}
                                 aria-label="Next products"
-                                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-500 border-black/10 dark:border-white/10 ${
-                                    currentIndex === maxIndex
-                                        ? 'opacity-20 cursor-not-allowed'
-                                        : 'hover:border-accent hover:bg-accent hover:text-white dark:text-white'
-                                }`}
+                                className="icon-button-circle"
                             >
-                                <ChevronRight size={20} />
+                                <ChevronRight size={18} />
                             </button>
                         </div>
                     </div>
@@ -156,7 +154,7 @@ export function FeaturedProducts({ onOpenModal }) {
                             key={i}
                             onClick={() => setCurrentIndex(i)}
                             className={`h-1.5 rounded-full transition-all duration-500 ${
-                                i === currentIndex ? 'w-12 bg-accent' : 'w-2 bg-black/10 dark:bg-white/10'
+                                i === currentIndex ? 'w-12 bg-accent' : 'w-2 bg-black/10 dark:bg-[var(--border-color)]'
                             }`}
                             aria-label={`Go to slide ${i + 1}`}
                         />
@@ -164,17 +162,23 @@ export function FeaturedProducts({ onOpenModal }) {
                 </div>
 
                 {/* Explore Link */}
-                <div className="mt-20 flex justify-center">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="mt-20 flex justify-center"
+                >
                     <Link
                         to="/shop"
                         className="group flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.4em] hover:text-accent transition-colors dark:text-white"
                     >
                         Explore Full Collection
-                        <div className="w-12 h-12 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
+                        <div className="icon-button-circle group-hover:bg-accent group-hover:text-white">
                             <ArrowRight size={18} />
                         </div>
                     </Link>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

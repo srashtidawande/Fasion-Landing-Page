@@ -1,0 +1,109 @@
+﻿
+> fasion-landing-page@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 2147 modules transformed.
+node.exe : [31mΓ£ù[39m 
+Build failed in 8.11s
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: ([31m  
+  Γ£ù[39m Build failed i   
+ n 8.11s:String) [], Rem    
+oteException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+[31merror during build:
+[31msrc/App.jsx (6:9): 
+"ThemeProvider" is not 
+exported by "src/context/The
+meContext.js", imported by 
+"src/App.jsx".[31m
+file: [36mC:/Users/hp/OneDr
+ive/Desktop/Fasion Landing 
+Page/src/App.jsx:6:9[31m
+[33m
+4: import { CartProvider } 
+from 
+'./context/CartContext';
+5: import { 
+WishlistProvider } from 
+'./context/WishlistContext';
+6: import { ThemeProvider } 
+from 
+'./context/ThemeContext';
+            ^
+7: import { Navbar } from '.
+/components/layout/Navbar';
+8: import { Footer } from '.
+/components/layout/Footer';
+[31m
+    at getRollupError (file:
+///C:/Users/hp/OneDrive/Desk
+top/Fasion%20Landing%20Page/
+node_modules/rollup/dist/es/
+shared/parseAst.js:402:41)
+    at error (file:///C:/Use
+rs/hp/OneDrive/Desktop/Fasio
+n%20Landing%20Page/node_modu
+les/rollup/dist/es/shared/pa
+rseAst.js:398:42)
+    at Module.error (file://
+/C:/Users/hp/OneDrive/Deskto
+p/Fasion%20Landing%20Page/no
+de_modules/rollup/dist/es/sh
+ared/node-entry.js:17040:16)
+    at Module.traceVariable 
+(file:///C:/Users/hp/OneDriv
+e/Desktop/Fasion%20Landing%2
+0Page/node_modules/rollup/di
+st/es/shared/node-entry.js:1
+7452:29)
+    at 
+ModuleScope.findVariable (fi
+le:///C:/Users/hp/OneDrive/D
+esktop/Fasion%20Landing%20Pa
+ge/node_modules/rollup/dist/
+es/shared/node-entry.js:1507
+0:39)
+    at 
+FunctionScope.findVariable (
+file:///C:/Users/hp/OneDrive
+/Desktop/Fasion%20Landing%20
+Page/node_modules/rollup/dis
+t/es/shared/node-entry.js:56
+73:38)
+    at FunctionBodyScope.fin
+dVariable (file:///C:/Users/
+hp/OneDrive/Desktop/Fasion%2
+0Landing%20Page/node_modules
+/rollup/dist/es/shared/node-
+entry.js:5673:38)
+    at Identifier.bind (file
+:///C:/Users/hp/OneDrive/Des
+ktop/Fasion%20Landing%20Page
+/node_modules/rollup/dist/es
+/shared/node-entry.js:5447:4
+0)
+    at CallExpression.bind (
+file:///C:/Users/hp/OneDrive
+/Desktop/Fasion%20Landing%20
+Page/node_modules/rollup/dis
+t/es/shared/node-entry.js:28
+25:28)
+    at CallExpression.bind (
+file:///C:/Users/hp/OneDrive
+/Desktop/Fasion%20Landing%20
+Page/node_modules/rollup/dis
+t/es/shared/node-entry.js:12
+179:15)[39m

@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '../../context/hooks';
 import { Button } from '../ui/Button';
+import { SizeSelector } from '../ui/SizeSelector';
+import { ShoppingBag } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,7 +49,7 @@ export function CartSidebar() {
                         className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white dark:bg-[#0f0f0f] z-[60] shadow-2xl flex flex-col transition-colors duration-300"
                     >
                         <div className="p-6 flex items-center justify-between border-b dark:border-white/10">
-                            <h2 className="text-xl font-serif font-medium dark:text-white transition-colors">Shopping Bag ({cart.length})</h2>
+                            <h2 className="text-xl font-serif italic dark:text-white transition-colors">Shopping Bag ({cart.length})</h2>
                             <button onClick={() => setIsCartOpen(false)} className="hover:rotate-90 transition-transform duration-300 dark:text-white">
                                 <X size={24} />
                             </button>
@@ -55,9 +57,26 @@ export function CartSidebar() {
 
                         <div className="flex-1 overflow-y-auto p-6 space-y-8">
                             {cart.length === 0 ? (
-                                <div className="h-full flex flex-col items-center justify-center text-center space-y-4 text-muted dark:text-gray-400 transition-colors">
-                                    <p>Your bag is empty.</p>
-                                    <Button variant="outline" onClick={() => setIsCartOpen(false)} className="dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black transition-colors">Continue Shopping</Button>
+                                <div className="h-full flex flex-col items-center justify-center text-center space-y-8 py-20">
+                                    <motion.div 
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        className="w-24 h-24 bg-gray-50 dark:bg-white/[0.02] rounded-full flex items-center justify-center text-gray-200 dark:text-white/5"
+                                    >
+                                        <ShoppingBag size={48} strokeWidth={1} />
+                                    </motion.div>
+                                    <div className="space-y-2">
+                                        <p className="text-sm font-black uppercase tracking-[0.3em] dark:text-white">Your bag is empty.</p>
+                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-relaxed">It seems you haven't discovered <br/> our latest pieces yet.</p>
+                                    </div>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setIsCartOpen(false)} 
+                                        pill
+                                        className="dark:border-white/10 dark:text-white dark:hover:bg-white dark:hover:text-black transition-all hover:tracking-[0.3em]"
+                                    >
+                                        Discover Collections
+                                    </Button>
                                 </div>
                             ) : (
                                 cart.map((item) => (
@@ -73,27 +92,17 @@ export function CartSidebar() {
                                                         <div className="flex items-center gap-2 mt-2">
                                                             <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">{item.category}</span>
                                                             <span className="w-1 h-1 rounded-full bg-gray-200 dark:bg-white/10" />
-                                                            <div className="relative group/size">
-                                                                <select
-                                                                    value={item.selectedSize}
-                                                                    onChange={(e) => updateSize(item.id, item.selectedSize, e.target.value)}
-                                                                    className="appearance-none bg-transparent text-[10px] font-black uppercase tracking-[0.2em] text-accent outline-none cursor-pointer pr-4"
-                                                                >
-                                                                    {item.sizes?.map(size => (
-                                                                        <option key={size} value={size} className="bg-white dark:bg-[#0f0f0f] text-primary dark:text-white">
-                                                                            Size: {size}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                                <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                                    <Plus size={8} className="text-accent" />
-                                                                </div>
-                                                            </div>
+                                                            <SizeSelector 
+                                                                selected={item.selectedSize} 
+                                                                options={item.sizes || ['S', 'M', 'L', 'XL']} 
+                                                                onChange={(newSize) => updateSize(item.id, item.selectedSize, newSize)} 
+                                                            />
                                                         </div>
                                                     </div>
                                                     <button
                                                         onClick={() => removeFromCart(item.id, item.selectedSize)}
-                                                        className="text-gray-300 dark:text-gray-600 hover:text-red-500 transition-colors p-1"
+                                                        className="text-gray-200 dark:text-white/10 hover:text-red-500 dark:hover:text-red-400 transition-all p-2 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full"
+                                                        title="Remove from bag"
                                                     >
                                                         <Trash2 size={14} />
                                                     </button>
@@ -126,9 +135,9 @@ export function CartSidebar() {
 
                         {cart.length > 0 && (
                             <div className="p-6 border-t dark:border-white/10 bg-gray-50 dark:bg-black/40 transition-colors">
-                                <div className="flex justify-between mb-4 text-sm uppercase tracking-widest font-semibold dark:text-white">
+                                <div className="flex justify-between mb-4 text-sm uppercase tracking-widest font-semibold dark:text-white transition-colors">
                                     <span>Subtotal</span>
-                                    <span>₹{cartTotal}</span>
+                                    <span>₹{cartTotal.toLocaleString()}</span>
                                 </div>
                                 <p className="text-xs text-muted dark:text-gray-400 mb-6 text-center transition-colors">Shipping & taxes calculated at checkout.</p>
                                 <Button

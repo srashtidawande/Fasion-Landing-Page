@@ -7,7 +7,7 @@ export const products = [
         category: "Outerwear",
         department: "Women",
         sizes: ["XS", "S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -17,7 +17,7 @@ export const products = [
         category: "Dresses",
         department: "Women",
         sizes: ["XS", "S", "M", "L"],
-        image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -27,7 +27,7 @@ export const products = [
         category: "Accessories",
         department: "Women",
         sizes: ["One Size"],
-        image: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=600&auto=format&fit=crop&q=80",
+        image: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -37,7 +37,7 @@ export const products = [
         category: "Tops",
         department: "Women",
         sizes: ["XS", "S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -47,7 +47,7 @@ export const products = [
         category: "Bottoms",
         department: "Women",
         sizes: ["24", "26", "28", "30", "32"],
-        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -57,7 +57,7 @@ export const products = [
         category: "Outerwear",
         department: "Women",
         sizes: ["S", "M", "L", "XL"],
-        image: "https://plus.unsplash.com/premium_photo-1661308261387-9aca7336e9ea?w=600&auto=format&fit=crop&q=80",
+        image: "https://plus.unsplash.com/premium_photo-1661308261387-9aca7336e9ea?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -67,7 +67,7 @@ export const products = [
         category: "Bottoms",
         department: "Women",
         sizes: ["24", "26", "28", "30", "32"],
-        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -77,7 +77,7 @@ export const products = [
         category: "Tops",
         department: "Women",
         sizes: ["XS", "S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -87,7 +87,7 @@ export const products = [
         category: "Dresses",
         department: "Women",
         sizes: ["S", "M", "L"],
-        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -97,7 +97,7 @@ export const products = [
         category: "Tops",
         department: "Women",
         sizes: ["XS", "S", "M", "L"],
-        image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
 
@@ -109,7 +109,7 @@ export const products = [
         category: "Formal Wear",
         department: "Men",
         sizes: ["38R", "40R", "42R", "44R"],
-        image: "https://images.unsplash.com/photo-1594932224031-92f0797a36af?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1594932224031-92f0797a36af?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -119,7 +119,7 @@ export const products = [
         category: "Footwear",
         sizes: ["7", "8", "9", "10", "11", "12"],
         department: "Men",
-        image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -129,7 +129,7 @@ export const products = [
         category: "Tops",
         department: "Men",
         sizes: ["S", "M", "L", "XL", "XXL"],
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -139,7 +139,7 @@ export const products = [
         category: "Outerwear",
         department: "Men",
         sizes: ["M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -149,7 +149,7 @@ export const products = [
         category: "Bottoms",
         department: "Men",
         sizes: ["30", "32", "34", "36"],
-        image: "https://images.unsplash.com/photo-1473963456455-dc237536a0bc?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1473963456455-dc237536a0bc?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -159,7 +159,7 @@ export const products = [
         category: "Footwear",
         department: "Men",
         sizes: ["7", "8", "9", "10", "11"],
-        image: "https://images.unsplash.com/photo-1531310197839-ccf54634509e?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1531310197839-ccf54634509e?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -169,7 +169,7 @@ export const products = [
         category: "Tops",
         department: "Men",
         sizes: ["S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1614676471928-2ed0ad1061a4?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1614676471928-2ed0ad1061a4?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -179,7 +179,7 @@ export const products = [
         category: "Outerwear",
         department: "Men",
         sizes: ["M", "L", "XL", "XXL"],
-        image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
 
@@ -191,7 +191,7 @@ export const products = [
         category: "Bottoms",
         department: "Kids",
         sizes: ["2Y", "3Y", "4Y", "5Y"],
-        image: "https://images.unsplash.com/photo-1519457431-758c4a6ae7d1?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1519457431-758c4a6ae7d1?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -201,7 +201,7 @@ export const products = [
         category: "Footwear",
         department: "Kids",
         sizes: ["10C", "11C", "12C", "1Y", "2Y"],
-        image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -211,7 +211,7 @@ export const products = [
         category: "Tops",
         department: "Kids",
         sizes: ["3Y", "4Y", "5Y", "6Y"],
-        image: "https://images.unsplash.com/photo-151927847797a-3937989389a9?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-151927847797a-3937989389a9?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -221,7 +221,7 @@ export const products = [
         category: "Girls (4-12)",
         department: "Kids",
         sizes: ["4Y", "6Y", "8Y", "10Y"],
-        image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -231,7 +231,7 @@ export const products = [
         category: "Outerwear",
         department: "Kids",
         sizes: ["4Y", "6Y", "8Y"],
-        image: "https://images.unsplash.com/photo-1604467731651-bb0364375a34?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1604467731651-bb0364375a34?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
 
@@ -243,7 +243,7 @@ export const products = [
         category: "Makeup",
         department: "Beauty",
         sizes: ["One Size"],
-        image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -253,7 +253,7 @@ export const products = [
         category: "Skincare",
         department: "Beauty",
         sizes: ["30ml", "50ml"],
-        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -263,7 +263,7 @@ export const products = [
         category: "Fragrance",
         department: "Beauty",
         sizes: ["50ml", "100ml"],
-        image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=75&w=800",
         isNew: true,
     },
     {
@@ -273,7 +273,7 @@ export const products = [
         category: "Tools",
         department: "Beauty",
         sizes: ["One Size"],
-        image: "https://images.unsplash.com/photo-1601049676099-312d90e7ff58?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1601049676099-312d90e7ff58?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     },
     {
@@ -283,7 +283,7 @@ export const products = [
         category: "Skincare",
         department: "Beauty",
         sizes: ["50ml"],
-        image: "https://images.unsplash.com/photo-1556228720-197a67f8044d?auto=format&fit=crop&q=80&w=800",
+        image: "https://images.unsplash.com/photo-1556228720-197a67f8044d?auto=format&fit=crop&q=75&w=800",
         isNew: false,
     }
 ];

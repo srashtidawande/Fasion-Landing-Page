@@ -33,7 +33,7 @@ export function WishlistSidebar({ isOpen, setIsOpen }) {
                         className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white dark:bg-[#0f0f0f] z-[60] shadow-2xl flex flex-col transition-colors duration-300"
                     >
                         <div className="p-6 flex items-center justify-between border-b dark:border-white/10">
-                            <h2 className="text-xl font-serif font-medium dark:text-white transition-colors">My Wishlist ({wishlist.length})</h2>
+                            <h2 className="text-xl font-serif italic dark:text-white transition-colors">My Wishlist ({wishlist.length})</h2>
                             <button onClick={() => setIsOpen(false)} className="hover:rotate-90 transition-transform duration-300 dark:text-white"><X size={24} /></button>
                         </div>
 
@@ -55,11 +55,11 @@ export function WishlistSidebar({ isOpen, setIsOpen }) {
                                                     <h3 className="font-medium text-xs text-primary dark:text-white uppercase tracking-wide transition-colors">{item.name}</h3>
                                                     <button onClick={() => toggleWishlist(item)} className="text-muted dark:text-gray-500 hover:text-red-500 transition-colors"><X size={14} /></button>
                                                 </div>
-                                                <p className="text-[10px] text-muted dark:text-gray-400 uppercase mt-1 tracking-widest transition-colors">₹{item.price}</p>
+                                                <p className="text-[10px] text-muted dark:text-gray-400 uppercase mt-1 tracking-widest transition-colors font-medium">₹{item.price.toLocaleString()}</p>
                                             </div>
                                             <button
                                                 onClick={() => addToCart(item)}
-                                                className="text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 hover:text-accent transition-colors"
+                                                className="text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 hover:text-accent transition-colors transition-all"
                                             >
                                                 <ShoppingBag size={12} /> Add to Bag
                                             </button>

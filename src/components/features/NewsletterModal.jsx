@@ -65,8 +65,8 @@ export function NewsletterModal() {
 
                         <div className="p-12 md:p-16 flex flex-col justify-center space-y-8 bg-white">
                             <div className="space-y-4">
-                                <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-accent">Join the Club</h3>
-                                <h2 className="text-4xl md:text-5xl font-serif font-light tracking-tight leading-tight">Elevate Your Wardrobe</h2>
+                                <h3 className="overline-text">Join the Club</h3>
+                                <h2 className="heading-luxury-sm">Elevate Your Wardrobe</h2>
                                 <p className="text-muted leading-relaxed font-light">
                                     Subscribe to receive editorial updates, exclusive access to new drops, and 15% off your first order.
                                 </p>

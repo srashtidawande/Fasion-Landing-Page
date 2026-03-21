@@ -63,7 +63,7 @@ export function ProductModal({ product, isOpen, onClose }) {
                         <div className="w-full md:w-1/2 h-1/2 md:h-full p-10 md:p-16 overflow-y-auto flex flex-col">
                             <div className="mb-auto">
                                 <div className="flex items-center justify-between mb-8">
-                                    <span className="text-[10px] uppercase tracking-[0.5em] font-black text-accent">{product.department} / {product.category}</span>
+                                    <span className="overline-text mb-0">{product.department} / {product.category}</span>
                                     <div className="flex items-center space-x-1 text-amber-500">
                                         <Star size={12} fill="currentColor" />
                                         <span className="text-[10px] font-black tracking-widest text-gray-400">4.8</span>
@@ -125,10 +125,11 @@ export function ProductModal({ product, isOpen, onClose }) {
                                     )}
                                 </AnimatePresence>
                                 <Button
-                                    className="w-full py-6 text-[10px] font-black uppercase tracking-[0.5em] bg-black text-white dark:bg-white dark:text-black hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition-all duration-500 shadow-2xl"
+                                    variant="primary"
+                                    className="w-full py-6 text-[10px] font-black uppercase tracking-[0.5em] shadow-2xl"
                                     onClick={handleAddToCart}
                                 >
-                                    Add to Collection
+                                    Add to Bag
                                 </Button>
                             </div>
                         </div>

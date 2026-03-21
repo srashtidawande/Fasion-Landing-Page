@@ -1,9 +1,12 @@
 import { useContext } from 'react';
-import { CartContext } from './contexts/CartContext';
-import { ThemeContext } from './contexts/ThemeContext';
-import { WishlistContext } from './contexts/WishlistContext';
+import { CartContext } from './CartContext.js';
+import { ThemeContext } from './ThemeContext.js';
+import { WishlistContext } from './WishlistContext.js';
+
+import { NotificationContext } from './NotificationContext.jsx';
 
 export const useCart = () => useContext(CartContext);
+export const useNotification = () => useContext(NotificationContext);
 
 export const useTheme = () => {
     const context = useContext(ThemeContext);

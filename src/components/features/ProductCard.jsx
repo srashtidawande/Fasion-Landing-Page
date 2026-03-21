@@ -1,25 +1,28 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Eye } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { useWishlist, useCart } from '../../context/hooks';
+import { useWishlist, useCart, useNotification } from '../../context/hooks';
 
 export function ProductCard({ product, onOpenModal }) {
     const { toggleWishlist, isInWishlist } = useWishlist();
     const { addToCart } = useCart();
+    const { showNotification } = useNotification();
     const isWishlisted = isInWishlist(product.id);
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        addToCart(product);
+        showNotification(`${product.name} added to your bag`, 'success');
+    };
 
     return (
         <motion.div
-            layout
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            whileHover={{ 
-                y: -10,
-                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
-            }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -10 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="group relative bg-[var(--bg-primary)] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-[var(--border-color)]"
+            className="group relative bg-[var(--bg-primary)] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] border border-[var(--border-color)]"
         >
             {/* Image Container */}
             <div className="relative overflow-hidden aspect-[4/5] bg-[var(--bg-secondary)]">
@@ -27,8 +30,8 @@ export function ProductCard({ product, onOpenModal }) {
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full h-full object-cover"
                 />
 
@@ -56,12 +59,12 @@ export function ProductCard({ product, onOpenModal }) {
                 </button>
 
                 {/* Hover Overlay - Simplified & Elegant */}
-                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
-                <div className="absolute inset-x-6 bottom-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100 hidden md:block">
+                <div className="absolute inset-x-6 bottom-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100 hidden md:block">
                     <button
                         onClick={(e) => { e.stopPropagation(); onOpenModal(product); }}
-                        className="w-full py-4 bg-[var(--bg-primary)] text-[var(--text-primary)] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 rounded-xl shadow-2xl backdrop-blur-md border border-[var(--border-color)]"
+                        className="w-full py-4 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 rounded-xl shadow-2xl backdrop-blur-md"
                     >
                         Quick View
                     </button>
@@ -70,7 +73,7 @@ export function ProductCard({ product, onOpenModal }) {
 
             {/* Product Meta */}
             <div className="p-8 pb-10 flex flex-col items-center text-center">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-accent mb-3 font-black">{product.department}</span>
+                <span className="overline-text">{product.department}</span>
                 <h3
                     onClick={() => onOpenModal(product)}
                     className="text-lg font-serif italic text-[var(--text-primary)] mb-3 cursor-pointer hover:text-accent transition-colors line-clamp-1 leading-tight"
@@ -81,13 +84,16 @@ export function ProductCard({ product, onOpenModal }) {
                     <span className="text-sm font-black tracking-[0.2em] text-[var(--text-primary)]">₹{product.price.toLocaleString()}</span>
                 </div>
                 
-                <button
-                    onClick={(e) => { e.stopPropagation(); addToCart(product); }}
-                    className="w-full py-4.5 bg-transparent border-2 border-[var(--text-primary)] text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all duration-500 flex items-center justify-center gap-3 group/btn"
+                <Button
+                    variant="outline"
+                    pill
+                    size="md"
+                    onClick={handleAddToCart}
+                    className="w-full flex items-center justify-center gap-3 group/btn hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)]"
                 >
                     <ShoppingBag size={14} className="group-hover/btn:scale-110 transition-transform" />
-                    Add to Cart
-                </button>
+                    Add to Bag
+                </Button>
             </div>
         </motion.div>
     );
