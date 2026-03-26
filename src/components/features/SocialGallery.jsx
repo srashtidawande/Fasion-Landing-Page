@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Instagram } from 'lucide-react';
+import { ImageWithFallback } from '../ui/ImageWithFallback';
 
 const socialImages = [
     'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=75&w=600&auto=format&fit=crop',
@@ -37,9 +38,10 @@ export function SocialGallery() {
                             viewport={{ once: true }}
                             className="relative aspect-square overflow-hidden group cursor-pointer rounded-2xl shadow-sm border border-[var(--border-color)]"
                         >
-                            <img
+                            <ImageWithFallback
                                 src={img}
                                 alt={`Social ${index}`}
+                                loading="lazy"
                                 className="w-full h-full object-cover transition-transform duration-[1.5s] scale-100 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">

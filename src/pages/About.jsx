@@ -3,7 +3,7 @@ import { BrandStory } from '../components/features/BrandStory';
 
 export function About() {
     return (
-        <div className="pt-40 pb-24 bg-[var(--bg-primary)] transition-colors duration-500">
+        <div className="section-padding pt-32 lg:pt-40 bg-[var(--bg-primary)] transition-colors duration-500">
             <div className="container-custom">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -24,8 +24,8 @@ export function About() {
                             <p className="text-[var(--text-secondary)] leading-[1.8] font-light text-xl border-l border-accent/30 pl-8">
                                 We believe that true luxury is sustainable. Every piece in our collection is crafted with the environment in mind, using ethically sourced materials and working with artisans who share our commitment to long-term preservation.
                             </p>
-                            <p className="text-[var(--text-secondary)] leading-[1.8] font-light text-lg pl-8">
-                                By choosing timeless designs over fleeting trends, we encourage a more conscious approach to fashion—one that values quality, longevity, and the stories behind the garments.
+                            <p className="text-[var(--text-secondary)] leading-[1.8] font-light text-xl border-l border-accent/30 pl-8">
+                                We believe that true luxury is sustainable. Every piece in our collection is crafted with the environment in mind, using ethically sourced materials and working with artisans who share our commitment to long-term preservation.
                             </p>
                         </div>
                     </div>

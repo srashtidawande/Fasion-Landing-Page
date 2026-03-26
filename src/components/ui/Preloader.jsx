@@ -8,14 +8,14 @@ export function Preloader() {
                 opacity: 0,
                 transition: { duration: 1, ease: [0.22, 1, 0.36, 1], delay: 1 }
             }}
-            className="fixed inset-0 z-[1000] bg-white dark:bg-[#0a0a0a] flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[1000] bg-[var(--bg-primary)] flex items-center justify-center overflow-hidden transition-colors duration-500"
         >
             <div className="relative flex flex-col items-center">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-6xl md:text-8xl font-serif font-black tracking-[0.4em] dark:text-white"
+                    className="text-6xl md:text-8xl font-serif font-black tracking-[0.4em] text-[var(--text-primary)]"
                 >
                     LUXE<span className="text-accent">•</span>
                 </motion.div>

@@ -3,8 +3,13 @@ import { WishlistContext } from './WishlistContext.js';
 
 export function WishlistProvider({ children }) {
     const [wishlist, setWishlist] = useState(() => {
-        const saved = localStorage.getItem('wishlist');
-        return saved ? JSON.parse(saved) : [];
+        try {
+            const saved = localStorage.getItem('wishlist');
+            return saved ? JSON.parse(saved) : [];
+        } catch (error) {
+            console.error('Error loading wishlist:', error);
+            return [];
+        }
     });
 
     useEffect(() => {

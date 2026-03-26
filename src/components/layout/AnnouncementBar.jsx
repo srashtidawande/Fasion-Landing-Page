@@ -22,7 +22,7 @@ export function AnnouncementBar() {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + offers.length) % offers.length);
 
     return (
-        <div className="bg-[#f0f0f0] dark:bg-[#151515] text-primary dark:text-white py-8 px-4 relative h-20 md:h-[120px] flex items-center justify-center overflow-hidden border-b border-black/5 dark:border-white/5 group transition-colors duration-500">
+        <div className="bg-[var(--bg-secondary)] text-[var(--text-primary)] py-8 px-4 relative h-20 md:h-[120px] flex items-center justify-center overflow-hidden border-b border-[var(--border-color)] group transition-colors duration-500">
             <button
                 onClick={handlePrev}
                 className="absolute left-10 z-10 opacity-30 hover:opacity-100 transition-opacity"
@@ -41,10 +41,10 @@ export function AnnouncementBar() {
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className="flex flex-col items-center justify-center gap-3 md:gap-6"
                     >
-                        <span className="text-[12px] md:text-[14px] font-black uppercase tracking-[0.5em] bg-primary dark:bg-white text-white dark:text-black px-5 py-2 rounded-full shrink-0 shadow-lg">
+                        <span className="text-meta-premium !text-[var(--bg-primary)] bg-[var(--text-primary)] px-6 py-2.5 rounded-full shadow-2xl">
                             {offers[currentIndex].highlight}
                         </span>
-                        <p className="text-[16px] md:text-[22px] lg:text-[26px] font-light tracking-[0.3em] uppercase max-w-[320px] md:max-w-none leading-tight opacity-90">
+                        <p className="text-body-luxury !text-[var(--text-primary)] !text-sm md:!text-lg lg:!text-xl max-w-[280px] md:max-w-none uppercase font-bold text-center">
                             {offers[currentIndex].text}
                         </p>
                     </motion.div>
@@ -64,7 +64,7 @@ export function AnnouncementBar() {
                 {offers.map((_, idx) => (
                     <div
                         key={idx}
-                        className={`w-1 h-1 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-white w-3' : 'bg-white/30'}`}
+                        className={`w-1 h-1 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-[var(--text-primary)] w-3' : 'bg-[var(--text-primary)]/30'}`}
                     />
                 ))}
             </div>

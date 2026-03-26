@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Eye } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { ImageWithFallback } from '../ui/ImageWithFallback';
 import { useWishlist, useCart, useNotification } from '../../context/hooks';
 
 export function ProductCard({ product, onOpenModal }) {
@@ -26,7 +27,8 @@ export function ProductCard({ product, onOpenModal }) {
         >
             {/* Image Container */}
             <div className="relative overflow-hidden aspect-[4/5] bg-[var(--bg-secondary)]">
-                <motion.img
+                <ImageWithFallback
+                    isMotion
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
@@ -52,7 +54,7 @@ export function ProductCard({ product, onOpenModal }) {
                     }}
                     className={`absolute top-6 right-6 p-3.5 rounded-full glass z-20 transition-all duration-500 transform ${isWishlisted
                             ? 'bg-accent text-white scale-110 shadow-glow'
-                            : 'text-[var(--text-primary)] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0'
+                            : 'text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0'
                         }`}
                 >
                     <Heart size={16} strokeWidth={isWishlisted ? 0 : 2} fill={isWishlisted ? "currentColor" : "none"} />
@@ -64,7 +66,7 @@ export function ProductCard({ product, onOpenModal }) {
                 <div className="absolute inset-x-6 bottom-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100 hidden md:block">
                     <button
                         onClick={(e) => { e.stopPropagation(); onOpenModal(product); }}
-                        className="w-full py-4 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 rounded-xl shadow-2xl backdrop-blur-md"
+                        className="w-full py-4 bg-[var(--text-primary)] text-[var(--bg-primary)] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 rounded-xl shadow-2xl backdrop-blur-md"
                     >
                         Quick View
                     </button>
@@ -76,7 +78,7 @@ export function ProductCard({ product, onOpenModal }) {
                 <span className="overline-text">{product.department}</span>
                 <h3
                     onClick={() => onOpenModal(product)}
-                    className="text-lg font-serif italic text-[var(--text-primary)] mb-3 cursor-pointer hover:text-accent transition-colors line-clamp-1 leading-tight"
+                    className="text-lg font-serif italic mb-3 cursor-pointer hover:text-accent transition-colors line-clamp-1 leading-tight"
                 >
                     {product.name}
                 </h3>

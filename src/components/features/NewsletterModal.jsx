@@ -46,11 +46,11 @@ export function NewsletterModal() {
                         initial={{ scale: 0.9, y: 20, opacity: 0 }}
                         animate={{ scale: 1, y: 0, opacity: 1 }}
                         exit={{ scale: 0.9, y: 20, opacity: 0 }}
-                        className="bg-white max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl relative"
+                        className="bg-[var(--bg-primary)] max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl relative"
                     >
                         <button
                             onClick={handleClose}
-                            className="absolute top-4 right-4 z-10 p-2 text-white md:text-primary hover:text-accent transition-colors"
+                            className="absolute top-4 right-4 z-10 p-2 text-[var(--text-primary)] hover:text-accent transition-colors"
                         >
                             <X size={24} />
                         </button>
@@ -63,7 +63,7 @@ export function NewsletterModal() {
                             />
                         </div>
 
-                        <div className="p-12 md:p-16 flex flex-col justify-center space-y-8 bg-white">
+                        <div className="p-12 md:p-16 flex flex-col justify-center space-y-8 bg-[var(--bg-primary)]">
                             <div className="space-y-4">
                                 <h3 className="overline-text">Join the Club</h3>
                                 <h2 className="heading-luxury-sm">Elevate Your Wardrobe</h2>
@@ -80,7 +80,7 @@ export function NewsletterModal() {
                                             type="email"
                                             required
                                             placeholder="Email Address"
-                                            className="w-full pl-8 py-4 border-b border-gray-200 outline-none focus:border-primary transition-colors text-sm"
+                                            className="w-full pl-8 py-4 border-b border-[var(--border-color)] bg-transparent outline-none focus:border-accent transition-colors text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                         />

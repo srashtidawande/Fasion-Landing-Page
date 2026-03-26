@@ -14,7 +14,6 @@ export function Home({ onOpenModal }) {
         <div className="flex flex-col">
             <Hero />
             <OffersGrid />
-            <Collections />
             <FeaturedProducts onOpenModal={onOpenModal} />
             <LookbookSection />
             <CategorySection />

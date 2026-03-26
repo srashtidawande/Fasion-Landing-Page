@@ -1,28 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Button } from '../ui/Button';
+import { ImageWithFallback } from '../ui/ImageWithFallback';
 
 const slides = [
     {
         id: 1,
-        title: "Discover Your Style",
-        subtitle: "Luxury Redefined • Spring 2026",
-        description: "Experience the curated collection of modern fashion, where minimalist design meets exceptional craftsmanship.",
-        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1440"
+        title: "The New Elegance",
+        subtitle: "Aesthetic Redefined",
+        description: "Discover a curated collection of modern fashion, where minimalist design meets unparalleled craftsmanship.",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=70&w=1600"
     },
     {
         id: 2,
-        title: "Timeless Craft",
-        subtitle: "Exclusive Atelier",
-        description: "Meticulously crafted pieces designed to gracefully transcend trends and generations.",
-        image: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=1440"
+        title: "Modern Atelier",
+        subtitle: "Exclusive Designs",
+        description: "Meticulously crafted pieces designed to gracefully transcend trends and define your personal narrative.",
+        image: "https://images.unsplash.com/photo-1539109132381-3151b5aed2cd?auto=format&fit=crop&q=70&w=1600"
     },
     {
         id: 3,
-        title: "Organic Luxury",
+        title: "Art of Styling",
         subtitle: "Season Collective",
-        description: "Celebrating the innate beauty of natural fibers and sophisticated, sustainable silhouettes.",
-        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=1440"
+        description: "Celebrating the innate beauty of natural fibers and sophisticated, sustainable silhouettes for the contemporary wardrobe.",
+        image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=70&w=1600"
     }
 ];
 
@@ -95,8 +96,9 @@ export function Hero() {
                         transition={{ type: "tween", ease: "linear", duration: 0 }}
                         className="absolute inset-x-[-10%] inset-y-[-10%] w-[120%] h-[120%]"
                     >
-                    <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-overlay)] via-transparent to-[var(--hero-overlay)] z-10" />
-                        <motion.img
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80 z-10" />
+                        <ImageWithFallback
+                            isMotion
                             key={slides[currentSlide].image}
                             src={slides[currentSlide].image}
                             alt={slides[currentSlide].title}
@@ -150,16 +152,25 @@ export function Hero() {
                             ))}
                         </h1>
 
-                        <motion.div
+                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 1.5 }}
                             className="flex flex-col md:flex-row gap-8 justify-center items-center"
                         >
-                            <p className="text-white/70 text-sm md:text-base max-w-sm font-light tracking-[0.2em] leading-relaxed italic md:text-left md:border-l border-white/20 md:pl-8">
+                            <p className="text-body-luxury !text-white/80 max-w-sm italic md:text-left md:border-l border-white/20 md:pl-8">
                                 {slides[currentSlide].description}
                             </p>
-                            <div className="flex gap-4">
+                            <div className="flex flex-wrap gap-4 justify-center">
+                                <Button 
+                                    variant="primary" 
+                                    size="lg"
+                                    pill
+                                    onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                                    className="font-bold tracking-[0.4em] shadow-2xl shadow-black/20"
+                                >
+                                    Shop Now
+                                </Button>
                                 <Button 
                                     variant="glass" 
                                     size="lg"
@@ -167,7 +178,7 @@ export function Hero() {
                                     onClick={scrollToCollections}
                                     className="font-bold tracking-[0.4em] text-white hover:bg-white hover:text-black transition-all duration-500"
                                 >
-                                    Shop Now
+                                    Explore Collection
                                 </Button>
                             </div>
                         </motion.div>
@@ -176,7 +187,7 @@ export function Hero() {
             </div>
 
             {/* Slide Indicators */}
-            <div className="absolute right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
+            <div className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
                 {slides.map((_, idx) => (
                     <button
                         key={idx}

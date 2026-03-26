@@ -3,8 +3,13 @@ import { CartContext } from './CartContext.js';
 
 export function CartProvider({ children }) {
     const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem('cart');
-        return savedCart ? JSON.parse(savedCart) : [];
+        try {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : [];
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            return [];
+        }
     });
     const [isCartOpen, setIsCartOpen] = useState(false);
 

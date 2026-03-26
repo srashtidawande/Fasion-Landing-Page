@@ -88,7 +88,7 @@ export function OffersGrid() {
     const prev = () => setCurrentIndex(prev => Math.max(prev - 1, 0));
 
     return (
-        <section className="pt-10 pb-24 bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden">
+        <section className="section-padding bg-[var(--bg-primary)] transition-colors duration-500 overflow-hidden">
             <div className="container-custom relative">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-8">
@@ -149,14 +149,14 @@ export function OffersGrid() {
                                                 {offer.badge}
                                             </span>
                                         </div>
-                                        <h3 className={`text-4xl md:text-5xl font-serif italic mb-4 leading-tight ${offer.textColor}`}>
+                                        <h3 className={`heading-luxury-sm !text-4xl md:!text-5xl mb-4 leading-tight italic grayscale group-hover:grayscale-0 transition-all duration-700 ${offer.textColor}`}>
                                             {offer.title}
                                         </h3>
                                         <div className="space-y-1">
-                                            <p className={`text-2xl md:text-3xl font-black tracking-tight ${offer.textColor}`}>
+                                            <p className={`text-body-luxury !text-2xl md:!text-3xl !font-black !tracking-tighter !text-inherit ${offer.textColor}`}>
                                                 {offer.subtitle}
                                             </p>
-                                            <p className={`text-xs uppercase tracking-widest opacity-60 ${offer.textColor}`}>
+                                            <p className={`text-meta-premium opacity-60 !text-inherit ${offer.textColor}`}>
                                                 {offer.description}
                                             </p>
                                         </div>

@@ -33,8 +33,8 @@ export function Checkout() {
 
     if (cart.length === 0 && step !== 3) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white dark:bg-[#0a0a0a]">
-                <h2 className="text-2xl font-serif mb-6 dark:text-white">Your bag is empty</h2>
+            <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[var(--bg-primary)] transition-colors duration-500">
+                <h2 className="heading-luxury-sm !text-3xl mb-6">Your bag is empty</h2>
                 <Button onClick={() => navigate('/shop')}>Return to Catalog</Button>
             </div>
         );
@@ -54,8 +54,8 @@ export function Checkout() {
     };
 
     return (
-        <div className="min-h-screen pt-32 pb-24 px-6 md:px-12 bg-[#fcfcfc] dark:bg-[#0a0a0a] transition-colors duration-500">
-            <div className="container mx-auto max-w-7xl">
+        <div className="min-h-screen section-padding pt-32 lg:pt-40 bg-[var(--bg-primary)] transition-colors duration-500">
+            <div className="container-custom max-w-7xl">
                 <AnimatePresence mode="wait">
                     {step < 3 ? (
                         <motion.div
@@ -77,7 +77,7 @@ export function Checkout() {
                                     {step === 1 ? (
                                         <div className="space-y-8">
                                             <div className="space-y-4">
-                                                <h2 className="text-2xl font-serif italic dark:text-white">Contact Information</h2>
+                                                <h2 className="text-2xl font-serif italic">Contact Information</h2>
                                                 <div className="group">
                                                     <input
                                                         required
@@ -86,13 +86,13 @@ export function Checkout() {
                                                         placeholder="Email Address"
                                                         value={formData.email}
                                                         onChange={handleInputChange}
-                                                        className="w-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white font-medium rounded-sm group-hover:border-black/20 dark:group-hover:border-white/20"
+                                                        className="w-full bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] font-medium rounded-sm group-hover:border-black/20 dark:group-hover:border-white/20"
                                                     />
                                                 </div>
                                             </div>
 
                                             <div className="space-y-6 pt-4">
-                                                <h2 className="text-2xl font-serif italic dark:text-white">Shipping Address</h2>
+                                                <h2 className="text-2xl font-serif italic">Shipping Address</h2>
                                                 <div className="grid grid-cols-2 gap-6">
                                                     <input
                                                         required
@@ -101,7 +101,7 @@ export function Checkout() {
                                                         placeholder="First Name"
                                                         value={formData.firstName}
                                                         onChange={handleInputChange}
-                                                        className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white rounded-sm hover:border-black/20 dark:hover:border-white/20"
+                                                        className="bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] rounded-sm hover:border-black/20 dark:hover:border-white/20"
                                                     />
                                                     <input
                                                         required
@@ -110,7 +110,7 @@ export function Checkout() {
                                                         placeholder="Last Name"
                                                         value={formData.lastName}
                                                         onChange={handleInputChange}
-                                                        className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white rounded-sm hover:border-black/20 dark:hover:border-white/20"
+                                                        className="bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] rounded-sm hover:border-black/20 dark:hover:border-white/20"
                                                     />
                                                 </div>
                                                 <input
@@ -120,7 +120,7 @@ export function Checkout() {
                                                     placeholder="Address"
                                                     value={formData.address}
                                                     onChange={handleInputChange}
-                                                    className="w-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white rounded-sm hover:border-black/20 dark:hover:border-white/20"
+                                                    className="w-full bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] rounded-sm hover:border-black/20 dark:hover:border-white/20"
                                                 />
                                                 <div className="grid grid-cols-2 gap-6">
                                                     <input
@@ -130,7 +130,7 @@ export function Checkout() {
                                                         placeholder="City"
                                                         value={formData.city}
                                                         onChange={handleInputChange}
-                                                        className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white rounded-sm hover:border-black/20 dark:hover:border-white/20"
+                                                        className="bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] rounded-sm hover:border-black/20 dark:hover:border-white/20"
                                                     />
                                                     <input
                                                         required
@@ -139,7 +139,7 @@ export function Checkout() {
                                                         placeholder="ZIP Code"
                                                         value={formData.zip}
                                                         onChange={handleInputChange}
-                                                        className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 px-6 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white rounded-sm hover:border-black/20 dark:hover:border-white/20"
+                                                        className="bg-transparent border border-[var(--border-color)] px-6 py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] rounded-sm hover:border-black/20 dark:hover:border-white/20"
                                                     />
                                                 </div>
                                             </div>
@@ -148,12 +148,12 @@ export function Checkout() {
                                         <div className="space-y-8">
                                             <div className="space-y-4">
                                                 <div className="flex justify-between items-center">
-                                                    <h2 className="text-2xl font-serif italic dark:text-white">Payment Method</h2>
+                                                    <h2 className="text-2xl font-serif italic">Payment Method</h2>
                                                     <div className="flex space-x-2 text-gray-400">
                                                         <CreditCard size={20} />
                                                     </div>
                                                 </div>
-                                                <div className="p-8 border border-black/5 dark:border-white/5 bg-white dark:bg-white/5 rounded-sm space-y-6 shadow-sm">
+                                                <div className="p-8 border border-[var(--border-color)] bg-[var(--bg-secondary)] rounded-sm space-y-6 shadow-sm">
                                                     <input
                                                         required
                                                         type="text"
@@ -161,7 +161,7 @@ export function Checkout() {
                                                         placeholder="Card Number"
                                                         value={formData.cardNumber}
                                                         onChange={handleInputChange}
-                                                        className="w-full bg-transparent border-b border-black/10 dark:border-white/10 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white font-mono tracking-widest"
+                                                        className="w-full bg-transparent border-b border-[var(--border-color)] py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)] font-mono tracking-widest"
                                                     />
                                                     <div className="grid grid-cols-2 gap-6">
                                                         <input
@@ -171,7 +171,7 @@ export function Checkout() {
                                                             placeholder="MM / YY"
                                                             value={formData.expiry}
                                                             onChange={handleInputChange}
-                                                            className="bg-transparent border-b border-black/10 dark:border-white/10 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white"
+                                                            className="bg-transparent border-b border-[var(--border-color)] py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)]"
                                                         />
                                                         <input
                                                             required
@@ -180,7 +180,7 @@ export function Checkout() {
                                                             placeholder="CVV"
                                                             value={formData.cvv}
                                                             onChange={handleInputChange}
-                                                            className="bg-transparent border-b border-black/10 dark:border-white/10 py-4 outline-none focus:border-accent dark:focus:border-accent transition-all dark:text-white"
+                                                            className="bg-transparent border-b border-[var(--border-color)] py-4 outline-none focus:border-accent transition-all text-[var(--text-primary)]"
                                                         />
                                                     </div>
                                                 </div>
@@ -193,13 +193,13 @@ export function Checkout() {
                                             <button
                                                 type="button"
                                                 onClick={prevStep}
-                                                className="flex items-center space-x-2 text-[10px] uppercase tracking-widest font-black text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                                                className="flex items-center space-x-2 text-[10px] uppercase tracking-widest font-black text-gray-400 hover:text-[var(--text-primary)] transition-colors"
                                             >
                                                 <ArrowLeft size={14} />
                                                 <span>Back to Shipping</span>
                                             </button>
                                         ) : (
-                                            <Link to="/shop" className="text-[10px] uppercase tracking-widest font-black text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+                                            <Link to="/shop" className="text-[10px] uppercase tracking-widest font-black text-gray-400 hover:text-[var(--text-primary)] transition-colors">
                                                 Return to Shop
                                             </Link>
                                         )}
@@ -217,7 +217,7 @@ export function Checkout() {
                             {/* Right Side: Summary */}
                             <div className="lg:col-span-5">
                                 <div className="sticky top-32 glass dark:glass-dark p-10 space-y-10 rounded-sm">
-                                    <h2 className="text-xl font-serif italic dark:text-white">Order Summary</h2>
+                                    <h2 className="text-xl font-serif italic">Order Summary</h2>
 
                                     <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                                         {cart.map((item) => (
@@ -226,7 +226,7 @@ export function Checkout() {
                                                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                                 </div>
                                                 <div className="flex-1 flex flex-col justify-center">
-                                                    <h4 className="text-[11px] font-black uppercase tracking-widest dark:text-white">{item.name}</h4>
+                                                    <h4 className="text-[11px] font-black uppercase tracking-widest">{item.name}</h4>
                                                     <div className="flex justify-between items-center mt-1">
                                                         <span className="text-[10px] text-gray-400 uppercase tracking-widest">Qty: {item.quantity} / Size: {item.selectedSize}</span>
                                                         <span className="text-[11px] font-black dark:text-white">₹{(item.price * item.quantity).toLocaleString()}</span>
@@ -283,14 +283,14 @@ export function Checkout() {
                                 >
                                     Thank you for your trust
                                 </motion.span>
-                                <motion.h1 
+                                 <motion.h1 
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.5 }}
-                                    className="text-5xl md:text-7xl font-serif italic dark:text-white"
+                                    className="heading-luxury !text-5xl md:!text-7xl"
                                 >
                                     Welcome to <br />
-                                    <span className="not-italic font-bold">the Collective</span>
+                                    <span className="heading-luxury-italic opacity-60">the Collective</span>
                                 </motion.h1>
                                 <motion.p 
                                     initial={{ opacity: 0 }}

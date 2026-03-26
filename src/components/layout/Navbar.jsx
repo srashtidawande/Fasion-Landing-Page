@@ -3,6 +3,7 @@ import { ShoppingBag, Search, Menu, X, Heart, Sun, Moon, ChevronRight, ArrowRigh
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart, useTheme, useNotification } from '../../context/hooks';
+import { Button } from '../ui/Button';
 
 const departments = [
     {
@@ -43,7 +44,7 @@ const departments = [
     }
 ];
 
-export function Navbar({ onOpenWishlist }) {
+export function Navbar({ onOpenCart, onOpenWishlist }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -53,9 +54,10 @@ export function Navbar({ onOpenWishlist }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const { cartCount, setIsCartOpen } = useCart();
+    const { cartCount, setIsCartOpen: setIsCartOpenInternal } = useCart();
+    const setIsCartOpen = onOpenCart || setIsCartOpenInternal;
     const { theme, toggleTheme } = useTheme();
-    const { showNotification } = useNotification();
+    const { showNotification } = useNotification(); // Corrected line
 
     useEffect(() => {
         const handleScroll = () => {
@@ -111,8 +113,8 @@ export function Navbar({ onOpenWishlist }) {
 
                 {/* Desktop Links */}
                 <div className="hidden lg:flex items-center space-x-12">
-                    <Link to="/" className="nav-link">Home</Link>
-                    <Link to="/shop" className="nav-link">Shop</Link>
+                    <Link to="/" className="text-meta-premium hover:text-accent transition-colors">Home</Link>
+                    <Link to="/shop" className="text-meta-premium hover:text-accent transition-colors">Shop</Link>
                     
                     <div 
                         className="relative"
@@ -121,7 +123,7 @@ export function Navbar({ onOpenWishlist }) {
                         <a 
                             href="#featured-pieces"
                             onClick={(e) => scrollToSection(e, 'featured-pieces')}
-                            className={`nav-link transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === 'Collections' ? 'text-accent' : ''}`}
+                            className={`text-meta-premium transition-all duration-500 flex items-center gap-2 group py-4 ${activeDropdown === 'Collections' ? 'text-accent' : ''}`}
                         >
                             Collections
                             <ChevronRight 
@@ -138,48 +140,48 @@ export function Navbar({ onOpenWishlist }) {
                         </a>
                     </div>
 
-                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="nav-link">About</a>
-                    <Link to="/contact" className="nav-link">Contact</Link>
+                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-meta-premium hover:text-accent transition-colors">About</a>
+                    <Link to="/contact" className="text-meta-premium hover:text-accent transition-colors">Contact</Link>
                 </div>
 
                 {/* Icons */}
                 <div className="hidden md:flex items-center space-x-8">
                     <button
                         onClick={toggleTheme}
-                        className="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all text-[var(--text-primary)]"
+                        className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-color)] hover:bg-accent hover:border-accent hover:text-white transition-all duration-500 text-[var(--text-primary)]"
                         aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
                     >
-                        {theme === 'light' ? <Moon size={18} strokeWidth={1.5} /> : <Sun size={18} strokeWidth={1.5} />}
+                        {theme === 'light' ? <Moon size={16} strokeWidth={1.5} /> : <Sun size={16} strokeWidth={1.5} />}
                     </button>
                     <button
                         className="text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
                         aria-label="Search products"
                         onClick={() => setIsSearchOpen(true)}
                     >
-                        <Search size={20} strokeWidth={1.5} />
+                        <Search size={18} strokeWidth={1.5} />
                     </button>
                         <button
                             className="text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
                             aria-label="User Account"
                             onClick={() => showNotification('Login functionality coming soon!', 'info')}
                         >
-                        <User size={20} strokeWidth={1.5} />
+                        <User size={18} strokeWidth={1.5} />
                     </button>
                     <button
                         className="relative text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
                         aria-label="Wishlist"
                         onClick={onOpenWishlist}
                     >
-                        <Heart size={20} strokeWidth={1.5} />
+                        <Heart size={18} strokeWidth={1.5} />
                     </button>
                     <button
                         className="relative group text-[var(--text-primary)] hover:text-accent transition-all transform hover:scale-110"
                         aria-label={`Shopping Cart (${cartCount} items)`}
                         onClick={() => setIsCartOpen(true)}
                     >
-                        <ShoppingBag size={20} strokeWidth={1.5} />
+                        <ShoppingBag size={18} strokeWidth={1.5} />
                         {cartCount > 0 && (
-                            <span className="absolute -top-1.5 -right-1.5 bg-accent text-white text-[9px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-[var(--bg-primary)]">
+                            <span className="absolute -top-1.5 -right-1.5 bg-accent text-white text-[8px] font-black w-4.5 h-4.5 flex items-center justify-center rounded-full shadow-lg ring-2 ring-[var(--bg-primary)]">
                                 {cartCount}
                             </span>
                         )}
@@ -324,7 +326,7 @@ export function Navbar({ onOpenWishlist }) {
                                                     setIsSearchOpen(false);
                                                 }
                                             }}
-                                            className="w-full bg-transparent border-b-2 border-white/10 py-8 text-4xl md:text-7xl font-serif italic focus:outline-none focus:border-accent transition-all text-white placeholder:text-white/20"
+                                            className="w-full bg-transparent border-b-2 border-white/10 py-8 text-3xl md:text-5xl font-serif italic focus:outline-none focus:border-accent transition-all text-white placeholder:text-white/20"
                                         />
                                         <Search size={40} className="absolute right-0 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-accent transition-colors" />
                                     </div>
@@ -363,31 +365,32 @@ export function Navbar({ onOpenWishlist }) {
                         <div className="container px-8 pb-20">
                             <div className="flex flex-col space-y-12">
                                 <div className="space-y-6">
-                                    <Link to="/" onClick={(e) => { setIsMobileMenuOpen(false); if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Home</Link>
-                                    <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Shop</Link>
+                                    <Link to="/" onClick={(e) => { setIsMobileMenuOpen(false); if (location.pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="heading-luxury-sm !text-4xl text-center text-white pb-6 block border-b border-white/5 italic">Home</Link>
+                                    <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="heading-luxury-sm !text-4xl text-center text-white pb-6 block border-b border-white/5 italic">Shop</Link>
                                     
-                                    <div className="py-6">
-                                        <h4 className="overline-text mb-6">Collections</h4>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <a href="#featured-pieces" onClick={(e) => scrollToSection(e, 'featured-pieces')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Featured</a>
-                                            <a href="#categories" onClick={(e) => scrollToSection(e, 'categories')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Categories</a>
-                                            <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="text-[12px] uppercase tracking-widest text-white/50 font-bold hover:text-accent transition-colors">Reviews</a>
+                                    <div className="py-8">
+                                        <h4 className="text-meta-premium !text-accent mb-8 text-center">Collections</h4>
+                                        <div className="grid grid-cols-2 gap-8">
+                                            <a href="#featured-pieces" onClick={(e) => scrollToSection(e, 'featured-pieces')} className="text-meta-premium !text-white/60 hover:text-accent transition-colors text-center">Featured</a>
+                                            <a href="#categories" onClick={(e) => scrollToSection(e, 'categories')} className="text-meta-premium !text-white/60 hover:text-accent transition-colors text-center">Categories</a>
+                                            <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="text-meta-premium !text-white/60 hover:text-accent transition-colors text-center">Reviews</a>
+                                            <a href="#social-gallery" onClick={(e) => scrollToSection(e, 'social-gallery')} className="text-meta-premium !text-white/60 hover:text-accent transition-colors text-center">Social</a>
                                         </div>
                                     </div>
 
-                                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">About</a>
-                                    <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-5xl font-serif italic text-white pb-4 block border-b border-white/5">Contact</Link>
+                                    <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="heading-luxury-sm !text-4xl text-center text-white pb-6 block border-b border-white/5 italic">About</a>
+                                    <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="heading-luxury-sm !text-4xl text-center text-white pb-6 block border-b border-white/5 italic">Contact</Link>
                                 </div>
 
                                     <button
                                         onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false); }}
-                                        className="flex items-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
+                                        className="flex items-center justify-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
                                     >
                                         <ShoppingBag size={20} className="text-accent" /> Shopping Bag ({cartCount})
                                     </button>
                                     <button
                                         onClick={() => { alert('Login functionality coming soon!'); setIsMobileMenuOpen(false); }}
-                                        className="flex items-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
+                                        className="flex items-center justify-center gap-4 text-[12px] uppercase tracking-[0.4em] font-black text-white hover:text-accent transition-colors"
                                     >
                                         <User size={20} className="text-accent" /> Account / Login
                                     </button>

@@ -4,7 +4,7 @@ import { Button } from '../components/ui/Button';
 
 export function Contact() {
     return (
-        <div className="pt-40 pb-24 bg-[var(--bg-primary)] transition-colors duration-500">
+        <div className="section-padding pt-32 lg:pt-40 bg-[var(--bg-primary)] transition-colors duration-500">
             <div className="container-custom">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ export function Contact() {
                     <div className="bg-[var(--bg-secondary)] p-12 lg:p-16 rounded-[3rem] border border-[var(--border-color)] shadow-2xl shadow-accent/5">
                         <div className="mb-12">
                             <span className="overline-text">Direct Message</span>
-                            <h2 className="text-3xl font-serif italic text-[var(--text-primary)]">Send an <span className="not-italic font-bold">Inquiry</span></h2>
+                            <h2 className="heading-luxury-sm !text-4xl">Send an <span className="heading-luxury-italic opacity-60">Inquiry</span></h2>
                         </div>
                         <form className="space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

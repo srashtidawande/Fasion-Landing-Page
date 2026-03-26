@@ -7,7 +7,7 @@ export const products = [
         category: "Outerwear",
         department: "Women",
         sizes: ["XS", "S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=75&w=800",
+        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=60&w=800",
         isNew: true,
     },
     {

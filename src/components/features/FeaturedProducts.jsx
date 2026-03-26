@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCard } from './ProductCard';
+import { Button } from '../ui/Button';
 import { products } from '../../data/products';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -11,12 +12,12 @@ export function FeaturedProducts({ onOpenModal }) {
     const [itemsPerPage, setItemsPerPage] = useState(4);
 
     const filters = [
-        { id: 'All',          label: 'All' },
-        { id: 'Women',        label: 'Women' },
-        { id: 'Men',          label: 'Men' },
-        { id: 'Accessories',  label: 'Accessories' },
-        { id: 'New Arrivals', label: 'New Arrivals' },
-    ];
+    { id: 'All',          label: 'All Curation' },
+    { id: 'Women',        label: 'Women' },
+    { id: 'Men',          label: 'Men' },
+    { id: 'Accessories',  label: 'Curated Accessories' },
+    { id: 'New Arrivals', label: 'New Arrivals' },
+];
 
     const filteredProducts = useMemo(() => {
         if (filter === 'All')          return products;
@@ -35,6 +36,7 @@ export function FeaturedProducts({ onOpenModal }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Using handleFilterChange instead of inline logic
     const handleFilterChange = (cat) => {
         setFilter(cat);
         setCurrentIndex(0);
@@ -61,122 +63,139 @@ export function FeaturedProducts({ onOpenModal }) {
     return (
         <section id="featured-pieces" className="section-padding bg-[var(--bg-primary)] overflow-hidden">
             <div className="container-custom">
-                {/* Header */}
-                <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
+                {/* Visual Header Stage */}
+                <div className="relative mb-32">
                     <motion.div 
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                        className="max-w-xl"
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-center"
                     >
-                        <span className="overline-text">Our Curation</span>
-                        <h2 className="heading-luxury">
-                            The Featured <br />
-                            <span className="font-light not-italic">Collection</span>
+                        <span className="overline-text text-accent mb-6">Exquisite Selection</span>
+                        <h2 className="heading-luxury !text-6xl md:!text-9xl mb-12">
+                            The <span className="heading-luxury-italic opacity-50">Featured</span> <br />
+                            Statement <span className="text-accent underline decoration-accent/10 underline-offset-[20px]">Pieces</span>
                         </h2>
                     </motion.div>
 
-                    <div className="flex flex-col md:flex-row items-center gap-8">
-                        {/* Category Filters */}
-                        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                            {filters.map((f) => (
-                                <button
+                    {/* Navigation Cluster */}
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-12 mt-20">
+                        <div className="flex flex-wrap gap-4 justify-center">
+                            {filters.map((f, idx) => (
+                                <motion.button
                                     key={f.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.1 }}
                                     onClick={() => handleFilterChange(f.id)}
-                                    className={`relative px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.3em] font-black transition-all duration-500 ${
+                                    className={`group relative px-8 py-4 text-meta-premium transition-all duration-700 ${
                                         filter === f.id
-                                            ? 'bg-accent text-white shadow-xl shadow-accent/20'
-                                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
+                                            ? 'text-white'
+                                            : 'text-[var(--text-secondary)] hover:text-accent'
                                     }`}
                                 >
-                                    {f.label}
-                                    {f.id === 'New Arrivals' && filter !== 'New Arrivals' && (
-                                        <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                                    )}
-                                </button>
+                                    <span className="relative z-10">{f.label}</span>
+                                    <AnimatePresence>
+                                        {filter === f.id && (
+                                            <motion.div
+                                                layoutId="filter-pill"
+                                                className="absolute inset-0 bg-accent rounded-full shadow-2xl shadow-accent/40"
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.8 }}
+                                                transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+                                            />
+                                        )}
+                                    </AnimatePresence>
+                                    <div className="absolute inset-0 border border-[var(--border-color)] rounded-full group-hover:border-accent/30 transition-colors" />
+                                </motion.button>
                             ))}
                         </div>
 
-                        {/* Navigation Arrows */}
-                        <div className="flex gap-4">
-                            <button
-                                onClick={prev}
-                                disabled={currentIndex === 0}
-                                aria-label="Previous products"
-                                className="icon-button-circle"
-                            >
-                                <ChevronLeft size={18} />
-                            </button>
-                            <button
-                                onClick={next}
-                                disabled={currentIndex === maxIndex}
-                                aria-label="Next products"
-                                className="icon-button-circle"
-                            >
-                                <ChevronRight size={18} />
-                            </button>
+                        <div className="flex items-center gap-6">
+                            <span className="text-meta-premium !text-[var(--text-secondary)]/40">
+                                0{currentIndex + 1} / 0{maxIndex + 1}
+                            </span>
+                            <div className="h-px w-12 bg-[var(--border-color)]" />
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={prev}
+                                    disabled={currentIndex === 0}
+                                    className="w-16 h-16 rounded-full border border-[var(--border-color)] flex items-center justify-center transition-all duration-700 hover:bg-accent hover:border-accent hover:text-white disabled:opacity-10 group/nav"
+                                >
+                                    <ChevronLeft size={24} className="group-hover/nav:-translate-x-1 transition-transform" />
+                                </button>
+                                <button
+                                    onClick={next}
+                                    disabled={currentIndex === maxIndex}
+                                    className="w-16 h-16 rounded-full border border-[var(--border-color)] flex items-center justify-center transition-all duration-700 hover:bg-accent hover:border-accent hover:text-white disabled:opacity-10 group/nav"
+                                >
+                                    <ChevronRight size={24} className="group-hover/nav:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Slider */}
-                <div className="overflow-hidden">
-                    <motion.div
-                        className="flex gap-8 lg:gap-12"
-                        animate={{ x: `-${slideX}` }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 35 }}
-                    >
-                        <AnimatePresence mode="popLayout">
-                            {filteredProducts.map((product) => (
-                                <motion.div
-                                    key={product.id}
-                                    style={cardWidthStyle}
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                >
-                                    <ProductCard
-                                        product={product}
-                                        onOpenModal={() => onOpenModal(product)}
-                                    />
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </motion.div>
+                {/* Slider Stage */}
+                <div className="relative">
+                    <div className="overflow-visible">
+                        <motion.div
+                            className="flex gap-8 lg:gap-12"
+                            animate={{ x: `-${slideX}` }}
+                            transition={{ type: 'spring', stiffness: 200, damping: 40 }}
+                        >
+                            <AnimatePresence mode="popLayout">
+                                {filteredProducts.map((product, idx) => (
+                                    <motion.div
+                                        key={product.id}
+                                        style={cardWidthStyle}
+                                        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                                        transition={{ duration: 0.6, delay: idx * 0.05 }}
+                                    >
+                                        <ProductCard
+                                            product={product}
+                                            onOpenModal={() => onOpenModal(product)}
+                                        />
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </motion.div>
+                    </div>
+
+                    {/* Backdrop decorative text */}
+                    <div className="absolute top-1/2 left-0 -translate-y-1/2 pointer-events-none -z-10 select-none overflow-hidden">
+                        <span className="text-[20rem] font-serif italic text-accent/5 whitespace-nowrap leading-none tracking-tighter">
+                            Statement Statement Statement
+                        </span>
+                    </div>
                 </div>
 
-                {/* Pagination Dots */}
-                <div className="flex justify-center gap-3 mt-16">
-                    {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-                        <button
-                            key={i}
-                            onClick={() => setCurrentIndex(i)}
-                            className={`h-1.5 rounded-full transition-all duration-500 ${
-                                i === currentIndex ? 'w-12 bg-accent' : 'w-2 bg-black/10 dark:bg-[var(--border-color)]'
-                            }`}
-                            aria-label={`Go to slide ${i + 1}`}
-                        />
-                    ))}
-                </div>
-
-                {/* Explore Link */}
+                {/* Footer Action */}
                 <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="mt-20 flex justify-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    className="mt-32 pt-20 border-t border-[var(--border-color)] flex flex-col md:flex-row items-center justify-between gap-8"
                 >
-                    <Link
-                        to="/shop"
-                        className="group flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.4em] hover:text-accent transition-colors dark:text-white"
-                    >
-                        Explore Full Collection
-                        <div className="icon-button-circle group-hover:bg-accent group-hover:text-white">
-                            <ArrowRight size={18} />
-                        </div>
+                    <p className="text-meta-premium">
+                        Curating the future of luxury minimalism
+                    </p>
+                    <Link to="/shop">
+                        <Button 
+                            variant="primary" 
+                            size="lg" 
+                            pill
+                            className="group flex items-center gap-6 px-12"
+                        >
+                            <span className="relative z-10">Explore Entire Collection</span>
+                            <div className="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center transition-all duration-700 group-hover:rotate-45 group-hover:scale-110">
+                                <ArrowRight size={18} />
+                            </div>
+                        </Button>
                     </Link>
                 </motion.div>
             </div>

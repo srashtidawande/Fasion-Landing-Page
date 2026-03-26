@@ -4,29 +4,41 @@
 :root {
   --bg-primary: #fdf8f4;
   --bg-secondary: #f5ede6;
-  --text-primary: #1c1c2e;
-  --text-secondary: #6b6275;
+  --text-primary: #121221;
+  --text-secondary: #4a4a5e;
+  --heading-primary: #000000;
   --accent: #b76e79;
   --accent-hover: #9e5d67;
-  --border-color: rgba(28, 28, 46, 0.08);
-  --glass-bg: rgba(253, 248, 244, 0.7);
-  --glass-border: rgba(183, 110, 121, 0.12);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(253, 248, 244, 0.75);
+  --glass-border: rgba(183, 110, 121, 0.2);
   --hero-overlay: rgba(253, 248, 244, 0.3);
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-premium: 0 20px 50px rgba(0,0,0,0.05);
+  --shadow-premium: 0 20px 60px rgba(0,0,0,0.08);
+  /* Semantic extras */
+  --muted-icon: rgba(0, 0, 0, 0.2);
+  --input-bg: rgba(253, 248, 244, 0.6);
+  --sidebar-footer-bg: #f0e8e0;
+  --select-option-bg: #fdf8f4;
 }
 
 .dark {
   --bg-primary: #0a0c10;
-  --bg-secondary: #161b22;
-  --text-primary: #f0f6fc;
-  --text-secondary: #8b949e;
+  --bg-secondary: #0f1318;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --heading-primary: #ffffff;
   --accent: #f472b6;
   --accent-hover: #fb7185;
-  --border-color: rgba(240, 246, 252, 0.08);
-  --glass-bg: rgba(10, 12, 16, 0.8);
-  --glass-border: rgba(244, 114, 182, 0.15);
-  --hero-overlay: rgba(10, 12, 16, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(10, 12, 16, 0.85);
+  --glass-border: rgba(244, 114, 182, 0.25);
+  --hero-overlay: rgba(10, 12, 16, 0.7);
+  /* Semantic extras */
+  --muted-icon: rgba(255, 255, 255, 0.15);
+  --input-bg: rgba(10, 12, 16, 0.6);
+  --sidebar-footer-bg: #0d1117;
+  --select-option-bg: #0a0c10;
 }
 
 /* Global Transitions for Theme Switching */
@@ -70,22 +82,38 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight;
+    color: var(--heading-primary);
+    @apply font-serif tracking-tight font-bold leading-tight antialiased;
   }
 }
 
 @layer components {
   /* Unified Typography Utilities */
   .overline-text {
-    @apply text-[10px] sm:text-[11px] font-black uppercase tracking-[0.5em] text-accent mb-4 block;
+    @apply text-[11px] font-black uppercase tracking-[0.5em] text-accent mb-4 block antialiased;
   }
 
   .heading-luxury {
-    @apply text-4xl sm:text-5xl lg:text-7xl font-serif italic font-light leading-[1.1] dark:text-white transition-all duration-700;
+    color: var(--heading-primary);
+    @apply text-5xl sm:text-7xl lg:text-9xl font-serif font-bold leading-[1] tracking-tighter transition-all duration-700;
+  }
+
+  .heading-luxury-italic {
+    @apply font-serif italic;
+    font-weight: 300;
   }
 
   .heading-luxury-sm {
-    @apply text-3xl sm:text-4xl lg:text-5xl font-serif italic font-light leading-tight dark:text-white;
+    color: var(--heading-primary);
+    @apply text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight;
+  }
+
+  .text-body-luxury {
+    @apply font-sans text-sm sm:text-base leading-relaxed tracking-wide text-[var(--text-secondary)] font-medium;
+  }
+
+  .text-meta-premium {
+    @apply text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-secondary)]/60 antialiased;
   }
 
   /* Glassmorphism Refined */
@@ -99,7 +127,7 @@
 
   /* Section Spacing */
   .section-padding {
-    @apply py-24 sm:py-32 lg:py-40;
+    @apply py-16 sm:py-24 lg:py-32;
   }
 
   .container-custom {

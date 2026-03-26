@@ -45,6 +45,7 @@ function App() {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2500);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -78,13 +79,15 @@ function App() {
 
               <main className="min-h-screen">
                 <AnimatePresence mode="wait">
-                  <Routes location={location} key={location.pathname}>
-                    <Route path="/" element={<AnimatedPage><Home onOpenModal={handleOpenModal} /></AnimatedPage>} />
-                    <Route path="/shop" element={<AnimatedPage><Shop onOpenModal={handleOpenModal} /></AnimatedPage>} />
-                    <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
-                    <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
-                    <Route path="/checkout" element={<AnimatedPage><Checkout /></AnimatedPage>} />
-                  </Routes>
+                  <AnimatedPage key={location.pathname}>
+                    <Routes location={location}>
+                      <Route path="/" element={<Home onOpenModal={handleOpenModal} />} />
+                      <Route path="/shop" element={<Shop onOpenModal={handleOpenModal} />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/checkout" element={<Checkout />} />
+                    </Routes>
+                  </AnimatedPage>
                 </AnimatePresence>
               </main>
 
